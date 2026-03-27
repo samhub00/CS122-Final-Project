@@ -8,14 +8,15 @@
 
 ## Project Description
 
-This project is a recipe application that leverages the [Spoonacular API](https://spoonacular.com/food-api) to provide users with a powerful and intuitive culinary assistant. Users can search for recipes by name or keyword, or generate personalized recipe suggestions based on the ingredients they already have on hand. The app also surfaces detailed nutritional information for each recipe, helping users make informed dietary decisions. In addition to nutrition data, the application retrieves estimated pricing data so users can plan meals within a budget. Together, these features make the app a comprehensive tool for everyday meal planning, grocery management, and healthy eating.
+This project is a recipe application website that leverages the [Spoonacular API](https://spoonacular.com/food-api) to provide users with a powerful and intuitive culinary assistant. Users can search for recipes by name or keyword, or generate personalized recipe suggestions based on the ingredients they already have on hand. The website also surfaces detailed nutritional information for each recipe, helping users make informed dietary decisions. In addition to nutrition data, the application retrieves estimated pricing data so users can plan meals within a budget. Together, these features make the website a comprehensive tool for everyday meal planning, grocery management, and healthy eating.
 
 ---
 
 ## Project Outline / Plan
 
 ### Interface Plan
-The application will feature a clean, user-friendly interface with the following key views:
+The website will feature a clean, user-friendly interface with the following key views:
+- **Login Page** - A login page that is optional to users who would like to store their favorite data.
 - **Home / Search Page** — A search bar where users can look up recipes by name or keyword.
 - **Ingredient-Based Generator** — An input panel where users enter available ingredients to receive AI-assisted recipe suggestions from the Spoonacular API.
 - **Recipe Detail Page** — Displays full recipe instructions, ingredient lists, nutritional facts, and estimated cost per serving.
