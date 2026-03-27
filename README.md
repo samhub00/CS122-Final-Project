@@ -28,14 +28,13 @@ The interface will be built with simplicity and accessibility in mind, ensuring 
 ### Data Collection and Storage Plan
 *Written by Author #1 — Sam Hubler*
 
-> ⚠️ **[Placeholder — to be completed by Sam Hubler]**
->
-> This section should cover:
-> - How data is retrieved from the Spoonacular API (endpoints used, request parameters, authentication/API key management)
-> - How recipe, nutrition, and pricing data is parsed and structured
-> - Storage strategy (e.g., local caching, database, flat files)
-> - Any data cleaning or preprocessing steps
-> - How data is passed to the visualization and interface layers
+The data collection and storage layer will take in, sort, and store the data from the Spoonacular API depending on the call for easy access in the visualization step. 
+
+- **API Access** - When the website is accessed, the Spoonacular API will be accessed with our API key.
+- **Searching** - When the user selects an option, the Flask apps will perform their duties whether that is to search for a recipe, get nutritional information or otherwise.
+- **JSON Handling** - The Spoonacular API returns results in JSON form which will be handled comprehensively and efficiently, yielding the correct information for the user.
+- **User Login and Data Storage** - We will be using DynamoDB from AWS to store user data such as login, preferences and more.
+- **User Data Passing** - When a user logs in, their data will be accessed and passed through to the visualization layer. If a user is not logged in, no long term data will be stored, they will still be able to use the basic recipe gathering features.
 
 ---
 
