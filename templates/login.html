@@ -1,0 +1,249 @@
+<!DOCTYPE HTML>
+<!--
+	FoodApp - Sign In page
+	Based on Hyperspace by HTML5 UP (html5up.net | @ajlkn)
+-->
+<html>
+	<head>
+		<title>Sign In - FoodApp</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="assets/css/navbar.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<style>
+\t\t\t.auth-wrapper {
+\t\t\t\tmin-height: calc(100vh - 12em);
+\t\t\t\tdisplay: flex;
+\t\t\t\talign-items: flex-start;
+\t\t\t\tjustify-content: center;
+\t\t\t\tpadding-top: 2em;
+\t\t\t}
+\t\t\t.auth-card {
+\t\t\t\twidth: 100%;
+\t\t\t\tmax-width: 440px;
+\t\t\t\tpadding: 2.75em 2.25em;
+\t\t\t\tbackground: rgba(255, 255, 255, 0.06);
+\t\t\t\tborder: 1px solid rgba(255, 255, 255, 0.12);
+\t\t\t\tborder-radius: 10px;
+\t\t\t\tbox-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+\t\t\t}
+\t\t\t.auth-card h1 {
+\t\t\t\tfont-size: 1.6em;
+\t\t\t\tmargin-bottom: 0.25em;
+\t\t\t}
+\t\t\t.auth-card .subtitle {
+\t\t\t\topacity: 0.75;
+\t\t\t\tmargin-bottom: 1.75em;
+\t\t\t\tfont-size: 0.95em;
+\t\t\t}
+\t\t\t.auth-card label {
+\t\t\t\tdisplay: block;
+\t\t\t\tfont-size: 0.8em;
+\t\t\t\tfont-weight: 600;
+\t\t\t\tletter-spacing: 0.08em;
+\t\t\t\ttext-transform: uppercase;
+\t\t\t\tmargin-bottom: 0.4em;
+\t\t\t\topacity: 0.85;
+\t\t\t}
+\t\t\t.auth-card input[type="text"],
+\t\t\t.auth-card input[type="email"],
+\t\t\t.auth-card input[type="password"] {
+\t\t\t\twidth: 100%;
+\t\t\t\tfont-family: "Arial", sans-serif;
+\t\t\t\tcolor: #000;
+\t\t\t\tpadding: 0.7em 0.85em;
+\t\t\t\tborder-radius: 6px;
+\t\t\t\tbackground: #ffffff;
+\t\t\t}
+\t\t\t.auth-card .field { margin-bottom: 1.1em; }
+\t\t\t.password-wrap { position: relative; }
+\t\t\t.password-wrap input { padding-right: 3em !important; }
+\t\t\t.password-wrap .toggle-pw {
+\t\t\t\tposition: absolute;
+\t\t\t\tright: 0.6em;
+\t\t\t\ttop: 50%;
+\t\t\t\ttransform: translateY(-50%);
+\t\t\t\tbackground: transparent;
+\t\t\t\tborder: 0;
+\t\t\t\tpadding: 0.3em 0.5em;
+\t\t\t\tcolor: #5e42a6;
+\t\t\t\tfont-size: 0.8em;
+\t\t\t\tcursor: pointer;
+\t\t\t\tfont-weight: 700;
+\t\t\t\tletter-spacing: 0.1em;
+\t\t\t\ttext-transform: uppercase;
+\t\t\t\theight: auto;
+\t\t\t\tline-height: 1;
+\t\t\t}
+\t\t\t.password-wrap .toggle-pw:hover { color: #44307d; }
+\t\t\t.remember-row {
+\t\t\t\tdisplay: flex;
+\t\t\t\talign-items: center;
+\t\t\t\tjustify-content: space-between;
+\t\t\t\tmargin: 0.25em 0 1.5em;
+\t\t\t\tfont-size: 0.9em;
+\t\t\t}
+\t\t\t.remember-row label {
+\t\t\t\tdisplay: inline-flex;
+\t\t\t\talign-items: center;
+\t\t\t\tgap: 0.5em;
+\t\t\t\ttext-transform: none;
+\t\t\t\tletter-spacing: 0;
+\t\t\t\tfont-size: 1em;
+\t\t\t\tfont-weight: 400;
+\t\t\t\topacity: 0.9;
+\t\t\t\tmargin: 0;
+\t\t\t\tcursor: pointer;
+\t\t\t}
+\t\t\t.remember-row input[type="checkbox"] {
+\t\t\t\twidth: 1em;
+\t\t\t\theight: 1em;
+\t\t\t\tmargin: 0;
+\t\t\t\taccent-color: #5e42a6;
+\t\t\t}
+\t\t\t.auth-card .actions { margin: 0 0 1em; }
+\t\t\t.auth-card .actions li { width: 100%; padding-left: 0; }
+\t\t\t.auth-card .actions .button { width: 100%; }
+\t\t\t.auth-footer {
+\t\t\t\ttext-align: center;
+\t\t\t\tmargin-top: 1.5em;
+\t\t\t\tfont-size: 0.95em;
+\t\t\t\topacity: 0.85;
+\t\t\t}
+\t\t\t.auth-footer a { font-weight: 600; }
+\t\t\t.auth-banner {
+\t\t\t\tdisplay: none;
+\t\t\t\tmargin-bottom: 1.25em;
+\t\t\t\tpadding: 0.8em 1em;
+\t\t\t\tborder-radius: 6px;
+\t\t\t\tfont-size: 0.95em;
+\t\t\t\tline-height: 1.4;
+\t\t\t}
+\t\t\t.auth-banner.show { display: block; }
+\t\t\t.auth-banner.success {
+\t\t\t\tbackground: rgba(76, 175, 80, 0.18);
+\t\t\t\tborder: 1px solid rgba(76, 175, 80, 0.55);
+\t\t\t\tcolor: #d5f0d7;
+\t\t\t}
+\t\t\t.auth-banner.error {
+\t\t\t\tbackground: rgba(244, 67, 54, 0.18);
+\t\t\t\tborder: 1px solid rgba(244, 67, 54, 0.55);
+\t\t\t\tcolor: #fbd9d6;
+\t\t\t}
+\t\t\t.field-hint {
+\t\t\t\tfont-size: 0.8em;
+\t\t\t\topacity: 0.7;
+\t\t\t\tmargin-top: 0.35em;
+\t\t\t}
+\t\t</style>
+	</head>
+	<body class="is-preload">
+
+		<!-- Header -->
+			<header id="header">
+				<a href="index.html" class="title">FoodApp</a>
+				<nav>
+					<ul>
+						<li><a href="index.html">Home</a></li>
+						<li><a href="search.html">Search</a></li>
+						<li><a href="fridge.html">Fridge</a></li>
+						<li><a href="generic.html">About</a></li>
+						<li><a href="login.html" class="button primary small signin-btn active">Sign In</a></li>
+					</ul>
+				</nav>
+			</header>
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<section id="main" class="wrapper">
+						<div class="inner">
+							<div class="auth-wrapper">
+								<div class="auth-card">
+									<h1>Welcome back</h1>
+									<p class="subtitle">Sign in to save favorite recipes and track your meal history.</p>
+
+									<div id="auth-banner" class="auth-banner" role="status" aria-live="polite"></div>
+
+									<form id="login-form" action="/login" method="post" novalidate>
+										<div class="field">
+											<label for="username">Username or Email</label>
+											<input type="text" name="username" id="username" autocomplete="username" required />
+										</div>
+										<div class="field">
+											<label for="password">Password</label>
+											<div class="password-wrap">
+												<input type="password" name="password" id="password" autocomplete="current-password" required />
+												<button type="button" class="toggle-pw" data-target="password" aria-label="Show password">Show</button>
+											</div>
+										</div>
+										<div class="remember-row">
+											<label><input type="checkbox" name="remember" id="remember" /> Remember me</label>
+											<a href="#">Forgot password?</a>
+										</div>
+										<ul class="actions">
+											<li><button type="submit" class="button primary">Sign In</button></li>
+										</ul>
+									</form>
+
+									<div class="auth-footer">
+										<p>Don't have an account? <a href="signup.html">Create one</a></p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+
+			</div>
+
+		<!-- Footer -->
+			<footer id="footer" class="wrapper alt">
+				<div class="inner">
+					<ul class="menu">
+						<li>&copy; FoodApp. CS122 Final Project.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					</ul>
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+			<script>
+				// Password visibility toggles
+				document.querySelectorAll('.toggle-pw').forEach(function(btn) {
+					btn.addEventListener('click', function() {
+						var input = document.getElementById(btn.dataset.target);
+						if (!input) return;
+						var showing = input.type === 'text';
+						input.type = showing ? 'password' : 'text';
+						btn.textContent = showing ? 'Show' : 'Hide';
+						btn.setAttribute('aria-label', (showing ? 'Show' : 'Hide') + ' password');
+					});
+				});
+
+				// Intercept submit -- auth backend is not yet wired up
+				var form = document.getElementById('login-form');
+				var banner = document.getElementById('auth-banner');
+				form.addEventListener('submit', function(e) {
+					e.preventDefault();
+					var user = document.getElementById('username').value.trim();
+					var pass = document.getElementById('password').value;
+					if (!user || !pass) {
+						banner.className = 'auth-banner show error';
+						banner.textContent = 'Please enter both a username/email and a password.';
+						return;
+					}
+					banner.className = 'auth-banner show success';
+					banner.textContent = 'Signed in as ' + user + '. (Auth backend not yet wired up.)';
+				});
+			</script>
+
+	</body>
+</html>
