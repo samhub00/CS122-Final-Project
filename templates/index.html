@@ -12,6 +12,153 @@
         <link rel="stylesheet" href="assets/css/main.css" />
 		<link rel="stylesheet" href="assets/css/navbar.css" />
         <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+        <style>
+            /* Anchor the intro near the navbar but let the warm-coffee section stretch
+               so the hero gets some breathing room below the image. */
+            #wrapper > #intro {
+                justify-content: flex-start !important;
+                padding-top: 2.5em !important;
+                padding-bottom: 5em !important;
+                min-height: 90vh !important;
+            }
+            #intro .inner {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                text-align: center;
+                width: 100%;
+                max-width: 1100px;
+                margin: 0 auto;
+                padding: 0 1.5em;
+            }
+            #intro h1 { margin: 0 0 0.4em; }
+            #intro p { margin: 0 0 1em; }
+            #intro .actions { margin: 0.75em 0 0; }
+
+            /* Hero search bar -- matches the food showcase width below */
+            .hero-search {
+                display: flex;
+                align-items: center;
+                width: 100%;
+                max-width: 1040px;
+                margin: 0.75em auto 0.25em;
+                background: #ffffff;
+                border-radius: 999px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+                overflow: hidden;
+                transition: box-shadow 0.2s ease, transform 0.15s ease;
+            }
+            .hero-search:focus-within {
+                box-shadow: 0 14px 38px rgba(0, 0, 0, 0.35);
+                transform: translateY(-1px);
+            }
+            .hero-search .hero-search-icon {
+                flex: 0 0 auto;
+                padding: 0 0.4em 0 1.25em;
+                color: #9c95b3;
+                font-size: 1.1em;
+                line-height: 1;
+                display: inline-flex;
+                align-items: center;
+            }
+            .hero-search input[type="search"] {
+                flex: 1 1 auto;
+                width: 100%;
+                border: 0;
+                outline: none;
+                background: transparent;
+                color: #2e2a3a;
+                font-family: inherit;
+                font-size: 1.05em;
+                padding: 1em 0.75em;
+                box-shadow: none;
+            }
+            /* Grey placeholder that fades out as the user types
+               (browsers automatically hide placeholder when there is input) */
+            .hero-search input[type="search"]::placeholder {
+                color: #9c95b3;
+                opacity: 1;
+                transition: opacity 0.25s ease;
+            }
+            .hero-search input[type="search"]:focus::placeholder {
+                opacity: 0.55;
+            }
+            .hero-search input[type="search"]::-webkit-search-cancel-button {
+                -webkit-appearance: none;
+                appearance: none;
+            }
+            .hero-search button {
+                flex: 0 0 auto;
+                margin: 0.4em;
+                border: 0;
+                cursor: pointer;
+                background: linear-gradient(135deg, #d97706 0%, #fbbf24 100%);
+                color: #ffffff;
+                font-weight: 700;
+                letter-spacing: 0.18em;
+                text-transform: uppercase;
+                font-size: 0.75em;
+                padding: 0.95em 1.6em;
+                border-radius: 999px;
+                line-height: 1;
+                transition: filter 0.18s ease, transform 0.15s ease;
+            }
+            .hero-search button:hover { filter: brightness(1.07); transform: translateY(-1px); }
+            .hero-search button:active { transform: translateY(0); }
+
+            @media (max-width: 480px) {
+                .hero-search { border-radius: 14px; flex-wrap: wrap; }
+                .hero-search .hero-search-icon { padding: 0.75em 0.5em 0 1em; }
+                .hero-search input[type="search"] { padding: 0.85em 1em; }
+                .hero-search button { width: calc(100% - 0.8em); margin: 0.4em; }
+            }
+
+            /* Food showcase banner -- sized to share the viewport with the search bar */
+            .food-showcase {
+                position: relative;
+                width: 100%;
+                max-width: 1040px;
+                /* Slightly larger than before so the hero feels substantial */
+                height: clamp(280px, 52vh, 540px);
+                margin: 1.25em auto 0;
+                border-radius: 16px;
+                overflow: hidden;
+                background: #1a1726 center/cover no-repeat;
+                background-image: url('/images/delicious-barbecue-feast-with-a-variety-of-meats-and-sides-served-outdoors-photo.jpeg');
+                box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+            }
+            .food-showcase::after {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(180deg, rgba(0,0,0,0) 35%, rgba(0,0,0,0.65) 100%);
+            }
+            .food-showcase .showcase-caption {
+                position: absolute;
+                left: 0; right: 0; bottom: 0;
+                z-index: 1;
+                padding: 1.5em 2em;
+                color: #ffffff;
+            }
+            .food-showcase .showcase-caption h3 {
+                margin: 0 0 0.25em;
+                color: #ffffff;
+                font-size: 1.5em;
+                letter-spacing: 0.02em;
+            }
+            .food-showcase .showcase-caption p {
+                margin: 0;
+                font-size: 1em;
+                opacity: 0.92;
+                max-width: 50ch;
+            }
+            @media (max-width: 600px) {
+                .food-showcase { height: clamp(160px, 28vh, 260px); border-radius: 12px; }
+                .food-showcase .showcase-caption { padding: 0.85em 1.1em; }
+                .food-showcase .showcase-caption h3 { font-size: 1.1em; }
+            }
+        </style>
     </head>
     <body class="is-preload">
 
@@ -21,10 +168,10 @@
 				<nav>
 					<ul>
 						<li><a href="index.html" class="active">Home</a></li>
-						<li><a href="search.html">Search</a></li>
+						<li><a href="/favorites">Favorites</a></li>
 						<li><a href="fridge.html">Fridge</a></li>
 						<li><a href="generic.html">About</a></li>
-						<li><a href="login.html" class="button primary small signin-btn">Sign In</a></li>
+						<li><a href="/login" class="button primary small signin-btn">Sign In</a></li>
 					</ul>
 				</nav>
 			</header>
@@ -35,12 +182,19 @@
                 <!-- Intro -->
                     <section id="intro" class="wrapper style1 fullscreen fade-up">
                         <div class="inner">
-                            <h1>Hyperspace</h1>
-                            <p>Just another fine responsive site template designed by <a href="http://html5up.net">HTML5 UP</a><br />
-                            and released for free under the <a href="http://html5up.net/license">Creative Commons</a>.</p>
-                            <ul class="actions">
-                                <li><a href="#one" class="button scrolly">Learn more</a></li>
-                            </ul>
+                            <h1>FoodApp</h1>
+                            <form class="hero-search" action="/search" method="get" role="search">
+                                <span class="hero-search-icon" aria-hidden="true">&#128269;</span>
+                                <label for="hero-search-input" class="sr-only" style="position:absolute;left:-9999px;">Find recipe</label>
+                                <input id="hero-search-input" type="search" name="q" placeholder="Find recipe" autocomplete="off" />
+                                <button type="submit">Search</button>
+                            </form>
+                            <figure class="food-showcase" role="img" aria-label="A spread of grilled meats, mac and cheese, and fresh sides">
+                                <figcaption class="showcase-caption">
+                                    <h3>Real food, real fast.</h3>
+                                    <p>From quick weeknight dinners to weekend feasts &mdash; find the recipe that fits the moment.</p>
+                                </figcaption>
+                            </figure>
                         </div>
                     </section>
 

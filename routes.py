@@ -27,6 +27,11 @@ def fridge_page():
     return render_template('fridge.html')
 
 
+@app.route('/favorites', methods=['GET'])
+def favorites_page():
+    return render_template('favorites.html')
+
+
 @app.route('/login', methods=['GET'])
 def login_page():
     return render_template('login.html')

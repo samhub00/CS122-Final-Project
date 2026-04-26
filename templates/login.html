@@ -1,155 +1,399 @@
 <!DOCTYPE HTML>
 <!--
 	FoodApp - Sign In page
-	Based on Hyperspace by HTML5 UP (html5up.net | @ajlkn)
+	Custom auth UI built on top of the Hyperspace base styles.
 -->
 <html>
 	<head>
 		<title>Sign In - FoodApp</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<link rel="stylesheet" href="assets/css/navbar.css" />
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<link rel="stylesheet" href="/assets/css/main.css" />
+		<link rel="stylesheet" href="/assets/css/navbar.css" />
+		<noscript><link rel="stylesheet" href="/assets/css/noscript.css" /></noscript>
 		<style>
-\t\t\t.auth-wrapper {
-\t\t\t\tmin-height: calc(100vh - 12em);
-\t\t\t\tdisplay: flex;
-\t\t\t\talign-items: flex-start;
-\t\t\t\tjustify-content: center;
-\t\t\t\tpadding-top: 2em;
-\t\t\t}
-\t\t\t.auth-card {
-\t\t\t\twidth: 100%;
-\t\t\t\tmax-width: 440px;
-\t\t\t\tpadding: 2.75em 2.25em;
-\t\t\t\tbackground: rgba(255, 255, 255, 0.06);
-\t\t\t\tborder: 1px solid rgba(255, 255, 255, 0.12);
-\t\t\t\tborder-radius: 10px;
-\t\t\t\tbox-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
-\t\t\t}
-\t\t\t.auth-card h1 {
-\t\t\t\tfont-size: 1.6em;
-\t\t\t\tmargin-bottom: 0.25em;
-\t\t\t}
-\t\t\t.auth-card .subtitle {
-\t\t\t\topacity: 0.75;
-\t\t\t\tmargin-bottom: 1.75em;
-\t\t\t\tfont-size: 0.95em;
-\t\t\t}
-\t\t\t.auth-card label {
-\t\t\t\tdisplay: block;
-\t\t\t\tfont-size: 0.8em;
-\t\t\t\tfont-weight: 600;
-\t\t\t\tletter-spacing: 0.08em;
-\t\t\t\ttext-transform: uppercase;
-\t\t\t\tmargin-bottom: 0.4em;
-\t\t\t\topacity: 0.85;
-\t\t\t}
-\t\t\t.auth-card input[type="text"],
-\t\t\t.auth-card input[type="email"],
-\t\t\t.auth-card input[type="password"] {
-\t\t\t\twidth: 100%;
-\t\t\t\tfont-family: "Arial", sans-serif;
-\t\t\t\tcolor: #000;
-\t\t\t\tpadding: 0.7em 0.85em;
-\t\t\t\tborder-radius: 6px;
-\t\t\t\tbackground: #ffffff;
-\t\t\t}
-\t\t\t.auth-card .field { margin-bottom: 1.1em; }
-\t\t\t.password-wrap { position: relative; }
-\t\t\t.password-wrap input { padding-right: 3em !important; }
-\t\t\t.password-wrap .toggle-pw {
-\t\t\t\tposition: absolute;
-\t\t\t\tright: 0.6em;
-\t\t\t\ttop: 50%;
-\t\t\t\ttransform: translateY(-50%);
-\t\t\t\tbackground: transparent;
-\t\t\t\tborder: 0;
-\t\t\t\tpadding: 0.3em 0.5em;
-\t\t\t\tcolor: #5e42a6;
-\t\t\t\tfont-size: 0.8em;
-\t\t\t\tcursor: pointer;
-\t\t\t\tfont-weight: 700;
-\t\t\t\tletter-spacing: 0.1em;
-\t\t\t\ttext-transform: uppercase;
-\t\t\t\theight: auto;
-\t\t\t\tline-height: 1;
-\t\t\t}
-\t\t\t.password-wrap .toggle-pw:hover { color: #44307d; }
-\t\t\t.remember-row {
-\t\t\t\tdisplay: flex;
-\t\t\t\talign-items: center;
-\t\t\t\tjustify-content: space-between;
-\t\t\t\tmargin: 0.25em 0 1.5em;
-\t\t\t\tfont-size: 0.9em;
-\t\t\t}
-\t\t\t.remember-row label {
-\t\t\t\tdisplay: inline-flex;
-\t\t\t\talign-items: center;
-\t\t\t\tgap: 0.5em;
-\t\t\t\ttext-transform: none;
-\t\t\t\tletter-spacing: 0;
-\t\t\t\tfont-size: 1em;
-\t\t\t\tfont-weight: 400;
-\t\t\t\topacity: 0.9;
-\t\t\t\tmargin: 0;
-\t\t\t\tcursor: pointer;
-\t\t\t}
-\t\t\t.remember-row input[type="checkbox"] {
-\t\t\t\twidth: 1em;
-\t\t\t\theight: 1em;
-\t\t\t\tmargin: 0;
-\t\t\t\taccent-color: #5e42a6;
-\t\t\t}
-\t\t\t.auth-card .actions { margin: 0 0 1em; }
-\t\t\t.auth-card .actions li { width: 100%; padding-left: 0; }
-\t\t\t.auth-card .actions .button { width: 100%; }
-\t\t\t.auth-footer {
-\t\t\t\ttext-align: center;
-\t\t\t\tmargin-top: 1.5em;
-\t\t\t\tfont-size: 0.95em;
-\t\t\t\topacity: 0.85;
-\t\t\t}
-\t\t\t.auth-footer a { font-weight: 600; }
-\t\t\t.auth-banner {
-\t\t\t\tdisplay: none;
-\t\t\t\tmargin-bottom: 1.25em;
-\t\t\t\tpadding: 0.8em 1em;
-\t\t\t\tborder-radius: 6px;
-\t\t\t\tfont-size: 0.95em;
-\t\t\t\tline-height: 1.4;
-\t\t\t}
-\t\t\t.auth-banner.show { display: block; }
-\t\t\t.auth-banner.success {
-\t\t\t\tbackground: rgba(76, 175, 80, 0.18);
-\t\t\t\tborder: 1px solid rgba(76, 175, 80, 0.55);
-\t\t\t\tcolor: #d5f0d7;
-\t\t\t}
-\t\t\t.auth-banner.error {
-\t\t\t\tbackground: rgba(244, 67, 54, 0.18);
-\t\t\t\tborder: 1px solid rgba(244, 67, 54, 0.55);
-\t\t\t\tcolor: #fbd9d6;
-\t\t\t}
-\t\t\t.field-hint {
-\t\t\t\tfont-size: 0.8em;
-\t\t\t\topacity: 0.7;
-\t\t\t\tmargin-top: 0.35em;
-\t\t\t}
-\t\t</style>
+			/* ---------- Page shell ---------- */
+			/* Override Hyperspace's is-preload fade-in so the auth UI shows
+			   immediately instead of being hidden until JS runs. */
+			body.is-preload,
+			body.is-preload * { opacity: 1 !important; }
+			#wrapper { padding: 0; }
+
+			.auth-page {
+				min-height: calc(100vh - 6em);
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				padding: 2em 1.5em;
+			}
+
+			.auth-shell {
+				display: grid;
+				grid-template-columns: 1.05fr 1fr;
+				width: 100%;
+				max-width: 820px;
+				background: rgba(255, 255, 255, 0.05);
+				border: 1px solid rgba(255, 255, 255, 0.12);
+				border-radius: 16px;
+				overflow: hidden;
+				box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+				backdrop-filter: blur(6px);
+			}
+
+			/* ---------- Brand panel (left) ---------- */
+			.auth-brand {
+				position: relative;
+				padding: 2.25em 2em;
+				color: #ffffff;
+				background: linear-gradient(135deg, #d97706 0%, #fbbf24 50%, #fcd34d 100%);
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+				min-height: 440px;
+				overflow: hidden;
+			}
+			.auth-brand::before {
+				content: "";
+				position: absolute;
+				inset: -40% -40% auto auto;
+				width: 380px; height: 380px;
+				background: radial-gradient(circle at center, rgba(255,255,255,0.22), transparent 65%);
+				border-radius: 50%;
+				pointer-events: none;
+			}
+			.auth-brand::after {
+				content: "";
+				position: absolute;
+				bottom: -120px; left: -80px;
+				width: 320px; height: 320px;
+				background: radial-gradient(circle at center, rgba(255,255,255,0.14), transparent 65%);
+				border-radius: 50%;
+				pointer-events: none;
+			}
+			.auth-brand .brand-mark {
+				font-size: 1.05em;
+				font-weight: 700;
+				letter-spacing: 0.25em;
+				text-transform: uppercase;
+				opacity: 0.95;
+			}
+			.auth-brand .brand-headline { position: relative; z-index: 1; margin: 0; }
+			.auth-brand .brand-headline h2 {
+				font-size: 1.7em;
+				line-height: 1.2;
+				margin: 0 0 0.4em;
+				color: #ffffff;
+			}
+			.auth-brand .brand-headline p {
+				font-size: 1.02em;
+				line-height: 1.55;
+				opacity: 0.92;
+				margin: 0;
+				max-width: 32ch;
+			}
+			.auth-brand .brand-features {
+				position: relative;
+				z-index: 1;
+				list-style: none;
+				padding: 0;
+				margin: 0;
+				display: flex;
+				flex-direction: column;
+				gap: 0.85em;
+			}
+			.auth-brand .brand-features li {
+				display: flex;
+				align-items: flex-start;
+				gap: 0.75em;
+				font-size: 0.95em;
+				opacity: 0.95;
+				padding: 0;
+			}
+			.auth-brand .brand-features li::before {
+				content: "\2713";
+				flex: 0 0 auto;
+				width: 1.4em; height: 1.4em;
+				border-radius: 50%;
+				background: rgba(255, 255, 255, 0.22);
+				border: 1px solid rgba(255, 255, 255, 0.5);
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				font-size: 0.85em;
+				font-weight: 700;
+				color: #ffffff;
+			}
+
+			/* ---------- Form panel (right) ---------- */
+			.auth-form {
+				background: #ffffff;
+				color: #2e2a3a;
+				padding: 2.25em 2.25em;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+			}
+			.auth-form h1 {
+				font-size: 1.45em;
+				color: #2e2a3a;
+				margin: 0 0 0.25em;
+				letter-spacing: 0;
+				text-transform: none;
+				font-weight: 700;
+			}
+			.auth-form .subtitle {
+				color: #6b6580;
+				margin: 0 0 1.75em;
+				font-size: 0.95em;
+			}
+
+			.auth-tabs {
+				display: flex;
+				gap: 0.4em;
+				background: #fef3c7;
+				padding: 0.3em;
+				border-radius: 10px;
+				margin-bottom: 1.6em;
+			}
+			.auth-tabs a {
+				flex: 1;
+				text-align: center;
+				padding: 0.65em 0.5em;
+				border-radius: 7px;
+				font-size: 0.85em;
+				font-weight: 600;
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				color: #6b6580;
+				border-bottom: none;
+				transition: background 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
+			}
+			.auth-tabs a:hover { color: #92400e; }
+			.auth-tabs a.active {
+				background: #ffffff;
+				color: #92400e;
+				box-shadow: 0 2px 6px rgba(146, 64, 14, 0.15);
+			}
+
+			.auth-form .field { margin-bottom: 0.85em; }
+			.auth-form label {
+				display: block;
+				font-size: 0.78em;
+				font-weight: 700;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				color: #6b6580;
+				margin-bottom: 0.4em;
+			}
+			.auth-form input[type="text"],
+			.auth-form input[type="email"],
+			.auth-form input[type="password"] {
+				width: 100%;
+				font-family: inherit;
+				color: #2e2a3a;
+				background: #fffaeb;
+				border: 1px solid #fde68a;
+				padding: 0.7em 0.9em;
+				border-radius: 8px;
+				font-size: 0.95em;
+				transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+			}
+			.auth-form input[type="text"]:focus,
+			.auth-form input[type="email"]:focus,
+			.auth-form input[type="password"]:focus {
+				outline: none;
+				border-color: #fbbf24;
+				background: #ffffff;
+				box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.18);
+			}
+
+			.password-wrap { position: relative; }
+			.password-wrap input { padding-right: 3.5em !important; }
+			.password-wrap .toggle-pw {
+				position: absolute;
+				right: 0.6em;
+				top: 50%;
+				transform: translateY(-50%);
+				background: transparent;
+				border: 0;
+				padding: 0.3em 0.5em;
+				color: #d97706;
+				font-size: 0.75em;
+				cursor: pointer;
+				font-weight: 700;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				height: auto;
+				line-height: 1;
+			}
+			.password-wrap .toggle-pw:hover { color: #92400e; }
+
+			.remember-row {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				margin: 0.25em 0 1.5em;
+				font-size: 0.9em;
+				color: #6b6580;
+			}
+			.remember-row label {
+				display: inline-flex;
+				align-items: center;
+				gap: 0.5em;
+				text-transform: none;
+				letter-spacing: 0;
+				font-size: 0.95em;
+				font-weight: 500;
+				margin: 0;
+				cursor: pointer;
+				color: #2e2a3a;
+			}
+			.remember-row input[type="checkbox"] {
+				width: 1.05em;
+				height: 1.05em;
+				margin: 0;
+				accent-color: #fbbf24;
+			}
+			.remember-row a {
+				color: #d97706;
+				font-weight: 600;
+				border-bottom: 1px dotted rgba(217, 119, 6, 0.4);
+			}
+			.remember-row a:hover { border-bottom-color: #d97706; }
+
+			.btn-primary-full {
+				display: inline-block;
+				width: 100%;
+				border: 0;
+				background: linear-gradient(135deg, #d97706 0%, #fbbf24 100%);
+				color: #ffffff;
+				font-weight: 700;
+				letter-spacing: 0.15em;
+				text-transform: uppercase;
+				font-size: 0.85em;
+				padding: 1em 1.2em;
+				border-radius: 8px;
+				cursor: pointer;
+				transition: transform 0.15s ease, box-shadow 0.18s ease, filter 0.18s ease;
+				box-shadow: 0 6px 16px rgba(217, 119, 6, 0.35);
+			}
+			.btn-primary-full:hover {
+				transform: translateY(-1px);
+				filter: brightness(1.05);
+				box-shadow: 0 10px 22px rgba(217, 119, 6, 0.4);
+			}
+			.btn-primary-full:active { transform: translateY(0); }
+
+			.divider {
+				display: flex;
+				align-items: center;
+				gap: 0.75em;
+				margin: 1.5em 0 1.25em;
+				color: #9c95b3;
+				font-size: 0.78em;
+				letter-spacing: 0.15em;
+				text-transform: uppercase;
+			}
+			.divider::before, .divider::after {
+				content: "";
+				flex: 1;
+				height: 1px;
+				background: #fde68a;
+			}
+
+			.social-row {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 0.75em;
+			}
+			.social-btn {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				gap: 0.55em;
+				background: #ffffff;
+				color: #2e2a3a;
+				border: 1px solid #fde68a;
+				padding: 0.75em 1em;
+				border-radius: 8px;
+				font-size: 0.85em;
+				font-weight: 600;
+				letter-spacing: 0.05em;
+				cursor: pointer;
+				text-transform: none;
+				transition: background 0.15s ease, border-color 0.15s ease, transform 0.12s ease;
+			}
+			.social-btn:hover {
+				background: #fffaeb;
+				border-color: #fcd34d;
+				transform: translateY(-1px);
+			}
+			.social-btn .ico {
+				width: 1.1em; height: 1.1em;
+				display: inline-block;
+				font-weight: 800;
+				font-size: 1em;
+				line-height: 1;
+			}
+
+			.auth-footer {
+				text-align: center;
+				margin-top: 1.75em;
+				font-size: 0.95em;
+				color: #6b6580;
+			}
+			.auth-footer a {
+				color: #d97706;
+				font-weight: 700;
+				border-bottom: 1px dotted rgba(217, 119, 6, 0.5);
+			}
+			.auth-footer a:hover { border-bottom-color: #d97706; }
+
+			.auth-banner {
+				display: none;
+				margin-bottom: 1.25em;
+				padding: 0.85em 1em;
+				border-radius: 8px;
+				font-size: 0.93em;
+				line-height: 1.4;
+			}
+			.auth-banner.show { display: block; }
+			.auth-banner.success {
+				background: #e8f6ec;
+				border: 1px solid #b6e0c1;
+				color: #1f6a35;
+			}
+			.auth-banner.error {
+				background: #fdecec;
+				border: 1px solid #f3bdbd;
+				color: #8c1e1e;
+			}
+
+			/* ---------- Responsive ---------- */
+			@media (max-width: 820px) {
+				.auth-shell { grid-template-columns: 1fr; max-width: 480px; }
+				.auth-brand { min-height: 0; padding: 2.25em 2em; }
+				.auth-brand .brand-headline h2 { font-size: 1.7em; }
+				.auth-form { padding: 2.25em 1.75em; }
+			}
+			@media (max-width: 480px) {
+				.auth-page { padding: 1.5em 0.75em; }
+				.social-row { grid-template-columns: 1fr; }
+			}
+		</style>
 	</head>
 	<body class="is-preload">
 
 		<!-- Header -->
 			<header id="header">
-				<a href="index.html" class="title">FoodApp</a>
+				<a href="/" class="title">FoodApp</a>
 				<nav>
 					<ul>
-						<li><a href="index.html">Home</a></li>
-						<li><a href="search.html">Search</a></li>
-						<li><a href="fridge.html">Fridge</a></li>
-						<li><a href="generic.html">About</a></li>
-						<li><a href="login.html" class="button primary small signin-btn active">Sign In</a></li>
+						<li><a href="/">Home</a></li>
+						<li><a href="/favorites">Favorites</a></li>
+						<li><a href="/fridge">Fridge</a></li>
+						<li><a href="/about">About</a></li>
+						<li><a href="/login" class="button primary small signin-btn active">Sign In</a></li>
 					</ul>
 				</nav>
 			</header>
@@ -160,37 +404,70 @@
 				<!-- Main -->
 					<section id="main" class="wrapper">
 						<div class="inner">
-							<div class="auth-wrapper">
-								<div class="auth-card">
-									<h1>Welcome back</h1>
-									<p class="subtitle">Sign in to save favorite recipes and track your meal history.</p>
+							<div class="auth-page">
+								<div class="auth-shell">
 
-									<div id="auth-banner" class="auth-banner" role="status" aria-live="polite"></div>
-
-									<form id="login-form" action="/login" method="post" novalidate>
-										<div class="field">
-											<label for="username">Username or Email</label>
-											<input type="text" name="username" id="username" autocomplete="username" required />
+									<!-- Brand panel -->
+									<aside class="auth-brand">
+										<div class="brand-mark">FoodApp</div>
+										<div class="brand-headline">
+											<h2>Cook smarter with what you already have.</h2>
+											<p>Search thousands of recipes, save your favorites, and turn the contents of your fridge into dinner.</p>
 										</div>
-										<div class="field">
-											<label for="password">Password</label>
-											<div class="password-wrap">
-												<input type="password" name="password" id="password" autocomplete="current-password" required />
-												<button type="button" class="toggle-pw" data-target="password" aria-label="Show password">Show</button>
-											</div>
-										</div>
-										<div class="remember-row">
-											<label><input type="checkbox" name="remember" id="remember" /> Remember me</label>
-											<a href="#">Forgot password?</a>
-										</div>
-										<ul class="actions">
-											<li><button type="submit" class="button primary">Sign In</button></li>
+										<ul class="brand-features">
+											<li>Personalized recipe recommendations</li>
+											<li>Save and organize your favorite meals</li>
+											<li>Find recipes from ingredients on hand</li>
 										</ul>
-									</form>
+									</aside>
 
-									<div class="auth-footer">
-										<p>Don't have an account? <a href="signup.html">Create one</a></p>
+									<!-- Form panel -->
+									<div class="auth-form">
+										<h1>Welcome back</h1>
+										<p class="subtitle">Sign in to pick up where you left off.</p>
+
+										<div class="auth-tabs" role="tablist">
+											<a href="/login" class="active" role="tab" aria-selected="true">Sign In</a>
+											<a href="/signup" role="tab" aria-selected="false">Create Account</a>
+										</div>
+
+										<div id="auth-banner" class="auth-banner" role="status" aria-live="polite"></div>
+
+										<form id="login-form" action="/login" method="post" novalidate>
+											<div class="field">
+												<label for="username">Username or Email</label>
+												<input type="text" name="username" id="username" autocomplete="username" placeholder="you@example.com" required />
+											</div>
+											<div class="field">
+												<label for="password">Password</label>
+												<div class="password-wrap">
+													<input type="password" name="password" id="password" autocomplete="current-password" placeholder="Enter your password" required />
+													<button type="button" class="toggle-pw" data-target="password" aria-label="Show password">Show</button>
+												</div>
+											</div>
+											<div class="remember-row">
+												<label><input type="checkbox" name="remember" id="remember" /> Remember me</label>
+												<a href="#">Forgot password?</a>
+											</div>
+											<button type="submit" class="btn-primary-full">Sign In</button>
+										</form>
+
+										<div class="divider">or continue with</div>
+
+										<div class="social-row">
+											<button type="button" class="social-btn" onclick="window.coworkSocial &amp;&amp; window.coworkSocial('google')">
+												<span class="ico">G</span> Google
+											</button>
+											<button type="button" class="social-btn" onclick="window.coworkSocial &amp;&amp; window.coworkSocial('apple')">
+												<span class="ico">&#63743;</span> Apple
+											</button>
+										</div>
+
+										<div class="auth-footer">
+											<p>New to FoodApp? <a href="/signup">Create an account</a></p>
+										</div>
 									</div>
+
 								</div>
 							</div>
 						</div>
@@ -202,21 +479,21 @@
 			<footer id="footer" class="wrapper alt">
 				<div class="inner">
 					<ul class="menu">
-						<li>&copy; FoodApp. CS122 Final Project.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+						<li>&copy; FoodApp. CS122 Final Project.</li>
 					</ul>
 				</div>
 			</footer>
 
 		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.scrollex.min.js"></script>
-			<script src="assets/js/jquery.scrolly.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+			<script src="/assets/js/jquery.min.js"></script>
+			<script src="/assets/js/jquery.scrollex.min.js"></script>
+			<script src="/assets/js/jquery.scrolly.min.js"></script>
+			<script src="/assets/js/browser.min.js"></script>
+			<script src="/assets/js/breakpoints.min.js"></script>
+			<script src="/assets/js/util.js"></script>
+			<script src="/assets/js/main.js"></script>
 			<script>
-				// Password visibility toggles
+				// Password visibility toggle
 				document.querySelectorAll('.toggle-pw').forEach(function(btn) {
 					btn.addEventListener('click', function() {
 						var input = document.getElementById(btn.dataset.target);
@@ -228,21 +505,29 @@
 					});
 				});
 
-				// Intercept submit -- auth backend is not yet wired up
+				// Client-side validation -- backend auth is not yet wired up
 				var form = document.getElementById('login-form');
 				var banner = document.getElementById('auth-banner');
-				form.addEventListener('submit', function(e) {
-					e.preventDefault();
-					var user = document.getElementById('username').value.trim();
-					var pass = document.getElementById('password').value;
-					if (!user || !pass) {
-						banner.className = 'auth-banner show error';
-						banner.textContent = 'Please enter both a username/email and a password.';
-						return;
-					}
-					banner.className = 'auth-banner show success';
-					banner.textContent = 'Signed in as ' + user + '. (Auth backend not yet wired up.)';
-				});
+				if (form) {
+					form.addEventListener('submit', function(e) {
+						var user = document.getElementById('username').value.trim();
+						var pass = document.getElementById('password').value;
+						if (!user || !pass) {
+							e.preventDefault();
+							banner.className = 'auth-banner show error';
+							banner.textContent = 'Please enter both a username/email and a password.';
+							return;
+						}
+						// Let the form submit to /login; backend will respond.
+					});
+				}
+
+				// Placeholder for social sign-in buttons
+				window.coworkSocial = function(provider) {
+					if (!banner) return;
+					banner.className = 'auth-banner show error';
+					banner.textContent = 'Sign-in with ' + provider + ' is not yet available.';
+				};
 			</script>
 
 	</body>

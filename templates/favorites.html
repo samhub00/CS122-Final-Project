@@ -1,0 +1,399 @@
+<!DOCTYPE HTML>
+<!--
+	FoodApp - Favorites page
+	Custom UI built on top of the Hyperspace base styles.
+-->
+<html>
+	<head>
+		<title>Favorites - FoodApp</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="/assets/css/main.css" />
+		<link rel="stylesheet" href="/assets/css/navbar.css" />
+		<noscript><link rel="stylesheet" href="/assets/css/noscript.css" /></noscript>
+		<style>
+			/* ---------- Page header ---------- */
+			.fav-header {
+				max-width: 1100px;
+				margin: 0 auto 1.75em;
+				padding: 0 1em;
+				text-align: center;
+			}
+			.fav-header h1 {
+				font-size: 2.2em;
+				margin: 0 0 0.25em;
+			}
+			.fav-header p {
+				margin: 0 auto;
+				max-width: 60ch;
+				opacity: 0.85;
+			}
+
+			/* ---------- Toolbar ---------- */
+			.fav-toolbar {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.6em;
+				justify-content: center;
+				max-width: 1100px;
+				margin: 0 auto 2em;
+				padding: 0 1em;
+			}
+			.fav-toolbar .chip {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				padding: 0.55em 1.1em;
+				border-radius: 999px;
+				background: rgba(255, 255, 255, 0.08);
+				border: 1px solid rgba(255, 255, 255, 0.18);
+				color: #ffffff;
+				font-size: 0.78em;
+				font-weight: 600;
+				letter-spacing: 0.12em;
+				text-transform: uppercase;
+				cursor: pointer;
+				transition: background 0.18s ease, border-color 0.18s ease, transform 0.12s ease;
+				border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+			}
+			.fav-toolbar .chip:hover {
+				background: rgba(255, 255, 255, 0.16);
+				border-color: rgba(255, 255, 255, 0.32);
+				transform: translateY(-1px);
+			}
+			.fav-toolbar .chip.active {
+				background: #ffffff;
+				color: #d97706;
+				border-color: #ffffff;
+			}
+
+			/* ---------- Card grid ---------- */
+			.fav-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+				gap: 1.5em;
+				max-width: 1100px;
+				margin: 0 auto;
+				padding: 0 1em;
+			}
+			.fav-card {
+				position: relative;
+				background: rgba(255, 255, 255, 0.06);
+				border: 1px solid rgba(255, 255, 255, 0.12);
+				border-radius: 14px;
+				overflow: hidden;
+				transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+				display: flex;
+				flex-direction: column;
+			}
+			.fav-card:hover {
+				transform: translateY(-3px);
+				border-color: rgba(255, 255, 255, 0.25);
+				box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
+			}
+			.fav-card .thumb {
+				width: 100%;
+				aspect-ratio: 4 / 3;
+				background: #1a1726 center/cover no-repeat;
+				background-image: linear-gradient(135deg, #d97706, #fcd34d);
+				position: relative;
+			}
+			.fav-card .heart {
+				position: absolute;
+				top: 0.6em;
+				right: 0.6em;
+				width: 2.2em;
+				height: 2.2em;
+				border-radius: 50%;
+				border: 0;
+				background: rgba(0, 0, 0, 0.45);
+				color: #ff6b9a;
+				font-size: 1.1em;
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				cursor: pointer;
+				transition: background 0.15s ease, transform 0.12s ease;
+			}
+			.fav-card .heart:hover { background: rgba(0, 0, 0, 0.65); transform: scale(1.05); }
+			.fav-card .body {
+				padding: 1em 1.1em 1.2em;
+				display: flex;
+				flex-direction: column;
+				gap: 0.5em;
+				flex: 1 1 auto;
+			}
+			.fav-card h3 {
+				margin: 0;
+				font-size: 1.15em;
+				color: #ffffff;
+				letter-spacing: 0;
+			}
+			.fav-card .meta {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.4em 0.9em;
+				font-size: 0.82em;
+				opacity: 0.78;
+			}
+			.fav-card .meta span { display: inline-flex; align-items: center; gap: 0.3em; }
+			.fav-card .tags {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.35em;
+				margin-top: auto;
+				padding-top: 0.5em;
+			}
+			.fav-card .tag {
+				font-size: 0.7em;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				font-weight: 700;
+				padding: 0.3em 0.65em;
+				border-radius: 999px;
+				background: rgba(251, 191, 36, 0.22);
+				color: #fef3c7;
+			}
+
+			/* ---------- Empty state ---------- */
+			.fav-empty {
+				max-width: 520px;
+				margin: 1em auto 0;
+				padding: 3em 2em;
+				text-align: center;
+				background: rgba(255, 255, 255, 0.05);
+				border: 1px dashed rgba(255, 255, 255, 0.22);
+				border-radius: 16px;
+			}
+			.fav-empty .heart-big {
+				font-size: 2.4em;
+				color: #ff6b9a;
+				margin-bottom: 0.4em;
+				display: inline-block;
+			}
+			.fav-empty h2 {
+				margin: 0 0 0.4em;
+				font-size: 1.4em;
+			}
+			.fav-empty p {
+				margin: 0 0 1.4em;
+				opacity: 0.85;
+			}
+			.fav-empty a.btn {
+				display: inline-block;
+				background: linear-gradient(135deg, #d97706 0%, #fbbf24 100%);
+				color: #ffffff;
+				padding: 0.85em 1.6em;
+				border-radius: 999px;
+				font-weight: 700;
+				letter-spacing: 0.15em;
+				text-transform: uppercase;
+				font-size: 0.8em;
+				border-bottom: 0;
+				box-shadow: 0 6px 18px rgba(217, 119, 6, 0.35);
+				transition: transform 0.15s ease, filter 0.18s ease;
+			}
+			.fav-empty a.btn:hover { transform: translateY(-1px); filter: brightness(1.06); }
+
+			.hidden { display: none !important; }
+		</style>
+	</head>
+	<body class="is-preload">
+
+		<!-- Header -->
+			<header id="header">
+				<a href="/" class="title">FoodApp</a>
+				<nav>
+					<ul>
+						<li><a href="/">Home</a></li>
+						<li><a href="/favorites" class="active">Favorites</a></li>
+						<li><a href="/fridge">Fridge</a></li>
+						<li><a href="/about">About</a></li>
+						<li><a href="/login" class="button primary small signin-btn">Sign In</a></li>
+					</ul>
+				</nav>
+			</header>
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<section id="main" class="wrapper style2 fade-up">
+						<div class="inner">
+
+							<div class="fav-header">
+								<h1>Your Favorites</h1>
+								<p>All the recipes you've saved, in one place. Filter by category to jump straight to what you're craving.</p>
+							</div>
+
+							<div class="fav-toolbar" role="tablist">
+								<button class="chip active" data-filter="all">All</button>
+								<button class="chip" data-filter="quick">Quick</button>
+								<button class="chip" data-filter="bbq">BBQ</button>
+								<button class="chip" data-filter="vegetarian">Vegetarian</button>
+								<button class="chip" data-filter="dessert">Dessert</button>
+							</div>
+
+							<!-- Recipe grid (sample/placeholder cards until backend is wired up) -->
+							<div id="fav-grid" class="fav-grid">
+								<article class="fav-card" data-category="bbq">
+									<div class="thumb" style="background-image: linear-gradient(180deg, rgba(0,0,0,0.1), rgba(0,0,0,0.45)), url('/images/delicious-barbecue-feast-with-a-variety-of-meats-and-sides-served-outdoors-photo.jpeg');">
+										<button class="heart" aria-label="Remove from favorites" title="Remove from favorites">&#9829;</button>
+									</div>
+									<div class="body">
+										<h3>Smoky BBQ Ribs</h3>
+										<div class="meta">
+											<span>&#9201; 2h 30m</span>
+											<span>&#9733; 4.8</span>
+										</div>
+										<div class="tags"><span class="tag">BBQ</span><span class="tag">Pork</span></div>
+									</div>
+								</article>
+
+								<article class="fav-card" data-category="quick">
+									<div class="thumb">
+										<button class="heart" aria-label="Remove from favorites">&#9829;</button>
+									</div>
+									<div class="body">
+										<h3>15-Minute Garlic Pasta</h3>
+										<div class="meta">
+											<span>&#9201; 15m</span>
+											<span>&#9733; 4.6</span>
+										</div>
+										<div class="tags"><span class="tag">Quick</span><span class="tag">Pasta</span></div>
+									</div>
+								</article>
+
+								<article class="fav-card" data-category="vegetarian">
+									<div class="thumb">
+										<button class="heart" aria-label="Remove from favorites">&#9829;</button>
+									</div>
+									<div class="body">
+										<h3>Roasted Veggie Bowl</h3>
+										<div class="meta">
+											<span>&#9201; 35m</span>
+											<span>&#9733; 4.5</span>
+										</div>
+										<div class="tags"><span class="tag">Vegetarian</span><span class="tag">Healthy</span></div>
+									</div>
+								</article>
+
+								<article class="fav-card" data-category="dessert">
+									<div class="thumb">
+										<button class="heart" aria-label="Remove from favorites">&#9829;</button>
+									</div>
+									<div class="body">
+										<h3>Brown Butter Chocolate Chip Cookies</h3>
+										<div class="meta">
+											<span>&#9201; 45m</span>
+											<span>&#9733; 4.9</span>
+										</div>
+										<div class="tags"><span class="tag">Dessert</span><span class="tag">Baking</span></div>
+									</div>
+								</article>
+
+								<article class="fav-card" data-category="quick">
+									<div class="thumb">
+										<button class="heart" aria-label="Remove from favorites">&#9829;</button>
+									</div>
+									<div class="body">
+										<h3>Sheet-Pan Lemon Chicken</h3>
+										<div class="meta">
+											<span>&#9201; 30m</span>
+											<span>&#9733; 4.7</span>
+										</div>
+										<div class="tags"><span class="tag">Quick</span><span class="tag">Chicken</span></div>
+									</div>
+								</article>
+
+								<article class="fav-card" data-category="vegetarian">
+									<div class="thumb">
+										<button class="heart" aria-label="Remove from favorites">&#9829;</button>
+									</div>
+									<div class="body">
+										<h3>Creamy Mushroom Risotto</h3>
+										<div class="meta">
+											<span>&#9201; 50m</span>
+											<span>&#9733; 4.7</span>
+										</div>
+										<div class="tags"><span class="tag">Vegetarian</span><span class="tag">Comfort</span></div>
+									</div>
+								</article>
+							</div>
+
+							<!-- Empty state (shown when no favorites match the active filter) -->
+							<div id="fav-empty" class="fav-empty hidden">
+								<span class="heart-big">&#9829;</span>
+								<h2>Nothing saved here yet</h2>
+								<p>When you find a recipe you love, tap the heart to save it. Your favorites will show up here.</p>
+								<a href="/" class="btn">Find recipes</a>
+							</div>
+
+						</div>
+					</section>
+
+			</div>
+
+		<!-- Footer -->
+			<footer id="footer" class="wrapper style1-alt">
+				<div class="inner">
+					<ul class="menu">
+						<li>&copy; FoodApp. CS122 Final Project.</li>
+					</ul>
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="/assets/js/jquery.min.js"></script>
+			<script src="/assets/js/jquery.scrollex.min.js"></script>
+			<script src="/assets/js/jquery.scrolly.min.js"></script>
+			<script src="/assets/js/browser.min.js"></script>
+			<script src="/assets/js/breakpoints.min.js"></script>
+			<script src="/assets/js/util.js"></script>
+			<script src="/assets/js/main.js"></script>
+			<script>
+				// Category filter
+				var grid = document.getElementById('fav-grid');
+				var empty = document.getElementById('fav-empty');
+				var chips = document.querySelectorAll('.fav-toolbar .chip');
+
+				function applyFilter(filter) {
+					var cards = grid.querySelectorAll('.fav-card');
+					var visible = 0;
+					cards.forEach(function(card) {
+						var match = (filter === 'all') || (card.dataset.category === filter);
+						card.classList.toggle('hidden', !match);
+						if (match) visible++;
+					});
+					empty.classList.toggle('hidden', visible !== 0);
+				}
+
+				chips.forEach(function(chip) {
+					chip.addEventListener('click', function() {
+						chips.forEach(function(c) { c.classList.remove('active'); });
+						chip.classList.add('active');
+						applyFilter(chip.dataset.filter);
+					});
+				});
+
+				// Heart button -- removes the card from view (front-end only for now)
+				grid.querySelectorAll('.heart').forEach(function(btn) {
+					btn.addEventListener('click', function(e) {
+						e.preventDefault();
+						var card = btn.closest('.fav-card');
+						if (!card) return;
+						card.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
+						card.style.opacity = '0';
+						card.style.transform = 'scale(0.96)';
+						setTimeout(function() {
+							card.remove();
+							// Re-apply current filter to refresh empty state
+							var active = document.querySelector('.fav-toolbar .chip.active');
+							applyFilter(active ? active.dataset.filter : 'all');
+						}, 200);
+					});
+				});
+			</script>
+
+	</body>
+</html>
