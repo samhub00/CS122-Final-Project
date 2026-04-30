@@ -4,272 +4,326 @@
 	Based on Hyperspace by HTML5 UP (html5up.net | @ajlkn)
 -->
 <html>
-	<head>
-		<title>Create Account - FoodApp</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<link rel="stylesheet" href="assets/css/navbar.css" />
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-		<style>
-\t\t\t.auth-wrapper {
-\t\t\t\tmin-height: calc(100vh - 12em);
-\t\t\t\tdisplay: flex;
-\t\t\t\talign-items: flex-start;
-\t\t\t\tjustify-content: center;
-\t\t\t\tpadding-top: 2em;
-\t\t\t}
-\t\t\t.auth-card {
-\t\t\t\twidth: 100%;
-\t\t\t\tmax-width: 440px;
-\t\t\t\tpadding: 2.75em 2.25em;
-\t\t\t\tbackground: rgba(255, 255, 255, 0.06);
-\t\t\t\tborder: 1px solid rgba(255, 255, 255, 0.12);
-\t\t\t\tborder-radius: 10px;
-\t\t\t\tbox-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
-\t\t\t}
-\t\t\t.auth-card h1 {
-\t\t\t\tfont-size: 1.6em;
-\t\t\t\tmargin-bottom: 0.25em;
-\t\t\t}
-\t\t\t.auth-card .subtitle {
-\t\t\t\topacity: 0.75;
-\t\t\t\tmargin-bottom: 1.75em;
-\t\t\t\tfont-size: 0.95em;
-\t\t\t}
-\t\t\t.auth-card label {
-\t\t\t\tdisplay: block;
-\t\t\t\tfont-size: 0.8em;
-\t\t\t\tfont-weight: 600;
-\t\t\t\tletter-spacing: 0.08em;
-\t\t\t\ttext-transform: uppercase;
-\t\t\t\tmargin-bottom: 0.4em;
-\t\t\t\topacity: 0.85;
-\t\t\t}
-\t\t\t.auth-card input[type="text"],
-\t\t\t.auth-card input[type="email"],
-\t\t\t.auth-card input[type="password"] {
-\t\t\t\twidth: 100%;
-\t\t\t\tfont-family: "Arial", sans-serif;
-\t\t\t\tcolor: #000;
-\t\t\t\tpadding: 0.7em 0.85em;
-\t\t\t\tborder-radius: 6px;
-\t\t\t\tbackground: #ffffff;
-\t\t\t}
-\t\t\t.auth-card .field { margin-bottom: 1.1em; }
-\t\t\t.password-wrap { position: relative; }
-\t\t\t.password-wrap input { padding-right: 3em !important; }
-\t\t\t.password-wrap .toggle-pw {
-\t\t\t\tposition: absolute;
-\t\t\t\tright: 0.6em;
-\t\t\t\ttop: 50%;
-\t\t\t\ttransform: translateY(-50%);
-\t\t\t\tbackground: transparent;
-\t\t\t\tborder: 0;
-\t\t\t\tpadding: 0.3em 0.5em;
-\t\t\t\tcolor: #d97706;
-\t\t\t\tfont-size: 0.8em;
-\t\t\t\tcursor: pointer;
-\t\t\t\tfont-weight: 700;
-\t\t\t\tletter-spacing: 0.1em;
-\t\t\t\ttext-transform: uppercase;
-\t\t\t\theight: auto;
-\t\t\t\tline-height: 1;
-\t\t\t}
-\t\t\t.password-wrap .toggle-pw:hover { color: #92400e; }
-\t\t\t.remember-row {
-\t\t\t\tdisplay: flex;
-\t\t\t\talign-items: center;
-\t\t\t\tjustify-content: space-between;
-\t\t\t\tmargin: 0.25em 0 1.5em;
-\t\t\t\tfont-size: 0.9em;
-\t\t\t}
-\t\t\t.remember-row label {
-\t\t\t\tdisplay: inline-flex;
-\t\t\t\talign-items: center;
-\t\t\t\tgap: 0.5em;
-\t\t\t\ttext-transform: none;
-\t\t\t\tletter-spacing: 0;
-\t\t\t\tfont-size: 1em;
-\t\t\t\tfont-weight: 400;
-\t\t\t\topacity: 0.9;
-\t\t\t\tmargin: 0;
-\t\t\t\tcursor: pointer;
-\t\t\t}
-\t\t\t.remember-row input[type="checkbox"] {
-\t\t\t\twidth: 1em;
-\t\t\t\theight: 1em;
-\t\t\t\tmargin: 0;
-\t\t\t\taccent-color: #d97706;
-\t\t\t}
-\t\t\t.auth-card .actions { margin: 0 0 1em; }
-\t\t\t.auth-card .actions li { width: 100%; padding-left: 0; }
-\t\t\t.auth-card .actions .button { width: 100%; }
-\t\t\t.auth-footer {
-\t\t\t\ttext-align: center;
-\t\t\t\tmargin-top: 1.5em;
-\t\t\t\tfont-size: 0.95em;
-\t\t\t\topacity: 0.85;
-\t\t\t}
-\t\t\t.auth-footer a { font-weight: 600; }
-\t\t\t.auth-banner {
-\t\t\t\tdisplay: none;
-\t\t\t\tmargin-bottom: 1.25em;
-\t\t\t\tpadding: 0.8em 1em;
-\t\t\t\tborder-radius: 6px;
-\t\t\t\tfont-size: 0.95em;
-\t\t\t\tline-height: 1.4;
-\t\t\t}
-\t\t\t.auth-banner.show { display: block; }
-\t\t\t.auth-banner.success {
-\t\t\t\tbackground: rgba(76, 175, 80, 0.18);
-\t\t\t\tborder: 1px solid rgba(76, 175, 80, 0.55);
-\t\t\t\tcolor: #d5f0d7;
-\t\t\t}
-\t\t\t.auth-banner.error {
-\t\t\t\tbackground: rgba(244, 67, 54, 0.18);
-\t\t\t\tborder: 1px solid rgba(244, 67, 54, 0.55);
-\t\t\t\tcolor: #fbd9d6;
-\t\t\t}
-\t\t\t.field-hint {
-\t\t\t\tfont-size: 0.8em;
-\t\t\t\topacity: 0.7;
-\t\t\t\tmargin-top: 0.35em;
-\t\t\t}
-\t\t</style>
-	</head>
-	<body class="is-preload">
 
-		<!-- Header -->
-			<header id="header">
-				<a href="index.html" class="title">FoodApp</a>
-				<nav>
-					<ul>
-						<li><a href="index.html">Home</a></li>
-						<li><a href="/favorites">Favorites</a></li>
-						<li><a href="fridge.html">Fridge</a></li>
-						<li><a href="generic.html">About</a></li>
-						<li><a href="login.html" class="button primary small signin-btn active">Sign In</a></li>
-					</ul>
-				</nav>
-			</header>
+<head>
+	<title>Create Account - FoodApp</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="assets/css/main.css" />
+	<link rel="stylesheet" href="assets/css/navbar.css" />
+	<noscript>
+		<link rel="stylesheet" href="assets/css/noscript.css" />
+	</noscript>
+	<style>
+		.auth-wrapper {
+			min-height: calc(100vh - 12em);
+			display: flex;
+			align-items: flex-start;
+			justify-content: center;
+			padding-top: 2em;
+		}
 
-		<!-- Wrapper -->
-			<div id="wrapper">
+		.auth-card {
+			width: 100%;
+			max-width: 440px;
+			padding: 2.75em 2.25em;
+			background: rgba(255, 255, 255, 0.06);
+			border: 1px solid rgba(255, 255, 255, 0.12);
+			border-radius: 10px;
+			box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+		}
 
-				<!-- Main -->
-					<section id="main" class="wrapper">
-						<div class="inner">
-							<div class="auth-wrapper">
-								<div class="auth-card">
-									<h1>Create your account</h1>
-									<p class="subtitle">Join FoodApp to save favorites and get smart recipe suggestions.</p>
+		.auth-card h1 {
+			font-size: 1.6em;
+			margin-bottom: 0.25em;
+		}
 
-									<div id="auth-banner" class="auth-banner" role="status" aria-live="polite"></div>
+		.auth-card .subtitle {
+			opacity: 0.75;
+			margin-bottom: 1.75em;
+			font-size: 0.95em;
+		}
 
-									<form id="signup-form" action="/signup" method="post" novalidate>
-										<div class="field">
-											<label for="name">Full name</label>
-											<input type="text" name="name" id="name" autocomplete="name" required />
-										</div>
-										<div class="field">
-											<label for="email">Email</label>
-											<input type="email" name="email" id="email" autocomplete="email" required />
-										</div>
-										<div class="field">
-											<label for="username">Username</label>
-											<input type="text" name="username" id="username" autocomplete="username" required />
-										</div>
-										<div class="field">
-											<label for="password">Password</label>
-											<div class="password-wrap">
-												<input type="password" name="password" id="password" autocomplete="new-password" minlength="8" required />
-												<button type="button" class="toggle-pw" data-target="password" aria-label="Show password">Show</button>
-											</div>
-											<div class="field-hint">At least 8 characters.</div>
-										</div>
-										<div class="field">
-											<label for="confirm">Confirm password</label>
-											<div class="password-wrap">
-												<input type="password" name="confirm" id="confirm" autocomplete="new-password" minlength="8" required />
-												<button type="button" class="toggle-pw" data-target="confirm" aria-label="Show password">Show</button>
-											</div>
-										</div>
-										<ul class="actions">
-											<li><button type="submit" class="button primary">Create Account</button></li>
-										</ul>
-									</form>
+		.auth-card label {
+			display: block;
+			font-size: 0.8em;
+			font-weight: 600;
+			letter-spacing: 0.08em;
+			text-transform: uppercase;
+			margin-bottom: 0.4em;
+			opacity: 0.85;
+		}
 
-									<div class="auth-footer">
-										<p>Already have an account? <a href="login.html">Sign in</a></p>
-									</div>
+		.auth-card input[type="text"],
+		.auth-card input[type="email"],
+		.auth-card input[type="password"] {
+			width: 100%;
+			font-family: "Arial", sans-serif;
+			color: #000;
+			padding: 0.7em 0.85em;
+			border-radius: 6px;
+			background: #ffffff;
+		}
+
+		.auth-card .field {
+			margin-bottom: 1.1em;
+		}
+
+		.password-wrap {
+			position: relative;
+		}
+
+		.password-wrap input {
+			padding-right: 3em !important;
+		}
+
+		.password-wrap .toggle-pw {
+			position: absolute;
+			right: 0.6em;
+			top: 50%;
+			transform: translateY(-50%);
+			background: transparent;
+			border: 0;
+			padding: 0.3em 0.5em;
+			color: #d97706;
+			font-size: 0.8em;
+			cursor: pointer;
+			font-weight: 700;
+			letter-spacing: 0.1em;
+			text-transform: uppercase;
+			height: auto;
+			line-height: 1;
+		}
+
+		.password-wrap .toggle-pw:hover {
+			color: #92400e;
+		}
+
+		.remember-row {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			margin: 0.25em 0 1.5em;
+			font-size: 0.9em;
+		}
+
+		.remember-row label {
+			display: inline-flex;
+			align-items: center;
+			gap: 0.5em;
+			text-transform: none;
+			letter-spacing: 0;
+			font-size: 1em;
+			font-weight: 400;
+			opacity: 0.9;
+			margin: 0;
+			cursor: pointer;
+		}
+
+		.remember-row input[type="checkbox"] {
+			width: 1em;
+			height: 1em;
+			margin: 0;
+			accent-color: #d97706;
+		}
+
+		.auth-card .actions {
+			margin: 0 0 1em;
+		}
+
+		.auth-card .actions li {
+			width: 100%;
+			padding-left: 0;
+		}
+
+		.auth-card .actions .button {
+			width: 100%;
+		}
+
+		.auth-footer {
+			text-align: center;
+			margin-top: 1.5em;
+			font-size: 0.95em;
+			opacity: 0.85;
+		}
+
+		.auth-footer a {
+			font-weight: 600;
+		}
+
+		.auth-banner {
+			display: none;
+			margin-bottom: 1.25em;
+			padding: 0.8em 1em;
+			border-radius: 6px;
+			font-size: 0.95em;
+			line-height: 1.4;
+		}
+
+		.auth-banner.show {
+			display: block;
+		}
+
+		.auth-banner.success {
+			background: rgba(76, 175, 80, 0.18);
+			border: 1px solid rgba(76, 175, 80, 0.55);
+			color: #d5f0d7;
+		}
+
+		.auth-banner.error {
+			background: rgba(244, 67, 54, 0.18);
+			border: 1px solid rgba(244, 67, 54, 0.55);
+			color: #fbd9d6;
+		}
+
+		.field-hint {
+			font-size: 0.8em;
+			opacity: 0.7;
+			margin-top: 0.35em;
+		}
+
+		
+	</style>
+</head>
+
+<body class="is-preload">
+
+	<!-- Header -->
+	<header id="header">
+		<a href="index.html" class="title">FoodApp</a>
+		<nav>
+			<ul>
+				<li><a href="index.html">Home</a></li>
+				<li><a href="/favorites">Favorites</a></li>
+				<li><a href="fridge.html">Fridge</a></li>
+				<li><a href="generic.html">About</a></li>
+				<li><a href="login.html" class="button primary small signin-btn active">Sign In</a></li>
+			</ul>
+		</nav>
+	</header>
+
+	<!-- Wrapper -->
+	<div id="wrapper">
+
+		<!-- Main -->
+		<section id="main" class="wrapper">
+			<div class="inner">
+				<div class="auth-wrapper">
+					<div class="auth-card">
+						<h1>Create your account</h1>
+						<p class="subtitle">Join FoodApp to save favorites and get smart recipe suggestions.</p>
+
+						<div id="auth-banner" class="auth-banner" role="status" aria-live="polite"></div>
+
+						<form id="signup-form" action="/signup" method="post" novalidate>
+							<div class="field">
+								<label for="name">Full name</label>
+								<input type="text" name="name" id="name" autocomplete="name" required />
+							</div>
+							<div class="field">
+								<label for="email">Email</label>
+								<input type="email" name="email" id="email" autocomplete="email" required />
+							</div>
+							<div class="field">
+								<label for="username">Username</label>
+								<input type="text" name="username" id="username" autocomplete="username" required />
+							</div>
+							<div class="field">
+								<label for="password">Password</label>
+								<div class="password-wrap">
+									<input type="password" name="password" id="password" autocomplete="new-password"
+										minlength="8" required />
+									<button type="button" class="toggle-pw" data-target="password"
+										aria-label="Show password">Show</button>
+								</div>
+								<div class="field-hint">At least 8 characters.</div>
+							</div>
+							<div class="field">
+								<label for="confirm">Confirm password</label>
+								<div class="password-wrap">
+									<input type="password" name="confirm" id="confirm" autocomplete="new-password"
+										minlength="8" required />
+									<button type="button" class="toggle-pw" data-target="confirm"
+										aria-label="Show password">Show</button>
 								</div>
 							</div>
+							<ul class="actions">
+								<li><button type="submit" class="button primary">Create Account</button></li>
+							</ul>
+						</form>
+
+						<div class="auth-footer">
+							<p>Already have an account? <a href="login.html">Sign in</a></p>
 						</div>
-					</section>
-
-			</div>
-
-		<!-- Footer -->
-			<footer id="footer" class="wrapper alt">
-				<div class="inner">
-					<ul class="menu">
-						<li>&copy; FoodApp. CS122 Final Project.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-					</ul>
+					</div>
 				</div>
-			</footer>
+			</div>
+		</section>
 
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.scrollex.min.js"></script>
-			<script src="assets/js/jquery.scrolly.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
-			<script>
-				// Password visibility toggles
-				document.querySelectorAll('.toggle-pw').forEach(function(btn) {
-					btn.addEventListener('click', function() {
-						var input = document.getElementById(btn.dataset.target);
-						if (!input) return;
-						var showing = input.type === 'text';
-						input.type = showing ? 'password' : 'text';
-						btn.textContent = showing ? 'Show' : 'Hide';
-						btn.setAttribute('aria-label', (showing ? 'Show' : 'Hide') + ' password');
-					});
-				});
+	</div>
 
-				// Intercept submit -- auth backend is not yet wired up
-				var form = document.getElementById('signup-form');
-				var banner = document.getElementById('auth-banner');
-				form.addEventListener('submit', function(e) {
-					e.preventDefault();
-					var name = document.getElementById('name').value.trim();
-					var email = document.getElementById('email').value.trim();
-					var user = document.getElementById('username').value.trim();
-					var pass = document.getElementById('password').value;
-					var confirm = document.getElementById('confirm').value;
+	<!-- Footer -->
+	<footer id="footer" class="wrapper alt">
+		<div class="inner">
+			<ul class="menu">
+				<li>&copy; FoodApp. CS122 Final Project.</li>
+				<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+			</ul>
+		</div>
+	</footer>
 
-					if (!name || !email || !user || !pass || !confirm) {
-						banner.className = 'auth-banner show error';
-						banner.textContent = 'Please fill in every field.';
-						return;
-					}
-					if (pass.length < 8) {
-						banner.className = 'auth-banner show error';
-						banner.textContent = 'Password must be at least 8 characters.';
-						return;
-					}
-					if (pass !== confirm) {
-						banner.className = 'auth-banner show error';
-						banner.textContent = 'Passwords do not match.';
-						return;
-					}
-					banner.className = 'auth-banner show success';
-					banner.textContent = 'Account created for ' + user + '. (Auth backend not yet wired up.)';
-				});
-			</script>
+	<!-- Scripts -->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/jquery.scrollex.min.js"></script>
+	<script src="assets/js/jquery.scrolly.min.js"></script>
+	<script src="assets/js/browser.min.js"></script>
+	<script src="assets/js/breakpoints.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="assets/js/main.js"></script>
+	<script>
+		// Password visibility toggles
+		document.querySelectorAll('.toggle-pw').forEach(function (btn) {
+			btn.addEventListener('click', function () {
+				var input = document.getElementById(btn.dataset.target);
+				if (!input) return;
+				var showing = input.type === 'text';
+				input.type = showing ? 'password' : 'text';
+				btn.textContent = showing ? 'Show' : 'Hide';
+				btn.setAttribute('aria-label', (showing ? 'Show' : 'Hide') + ' password');
+			});
+		});
 
-	</body>
+		// Intercept submit -- auth backend is not yet wired up
+		var form = document.getElementById('signup-form');
+		var banner = document.getElementById('auth-banner');
+		form.addEventListener('submit', function (e) {
+			e.preventDefault();
+			var name = document.getElementById('name').value.trim();
+			var email = document.getElementById('email').value.trim();
+			var user = document.getElementById('username').value.trim();
+			var pass = document.getElementById('password').value;
+			var confirm = document.getElementById('confirm').value;
+
+			if (!name || !email || !user || !pass || !confirm) {
+				banner.className = 'auth-banner show error';
+				banner.textContent = 'Please fill in every field.';
+				return;
+			}
+			if (pass.length < 8) {
+				banner.className = 'auth-banner show error';
+				banner.textContent = 'Password must be at least 8 characters.';
+				return;
+			}
+			if (pass !== confirm) {
+				banner.className = 'auth-banner show error';
+				banner.textContent = 'Passwords do not match.';
+				return;
+			}
+			banner.className = 'auth-banner show success';
+			banner.textContent = 'Account created for ' + user + '. (Auth backend not yet wired up.)';
+		});
+	</script>
+
+</body>
+
 </html>
