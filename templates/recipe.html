@@ -1,0 +1,254 @@
+<!DOCTYPE HTML>
+<!--
+	Hyperspace by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+
+<head>
+	<title>Recipe - FoodApp</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="/assets/css/main.css" />
+	<link rel="stylesheet" href="/assets/css/navbar.css" />
+	<noscript>
+		<link rel="stylesheet" href="/assets/css/noscript.css" />
+	</noscript>
+	<style>
+		/* !important forces the style, necessary for the text to be the right color */
+
+		.recipe-container,
+		.recipe-container p,
+		.recipe-container li,
+		.recipe-container b,
+		.recipe-container strong {
+			color: #333 !important;
+		}
+
+		.recipe-container h1,
+		.recipe-container h2 {
+			color: #333 !important;
+		}
+
+		.recipe-container {
+			max-width: 900px;
+			margin: 40px auto;
+			padding: 20px;
+			background: #ffffff;
+			border-radius: 8px;
+			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+			color:#333;
+		}
+
+		.recipe-header {
+			display: flex;
+			gap: 30px;
+			margin-bottom: 30px;
+			flex-wrap: wrap;
+			color: #333;
+		}
+
+		.recipe-image {
+			flex: 1;
+			min-width: 250px;
+		}
+
+		.recipe-image img {
+			width: 100%;
+			border-radius: 8px;
+		}
+
+		.recipe-info {
+			flex: 1;
+			min-width: 250px;
+			color: #333;
+		}
+
+		.recipe-info h1 {
+			margin: 0 0 20px 0;
+			color: #333;
+		}
+
+		.recipe-stats {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 15px;
+			margin: 20px 0;
+			color: #333;
+		}
+
+		.stat {
+			background: white;
+			padding: 15px;
+			border-radius: 4px;
+			border-left: 4px solid #4CAF50;
+			color: #333;
+		}
+
+		.stat-label {
+			font-size: 0.9em;
+			color: #666;
+		}
+
+		.stat-value {
+			font-size: 1.5em;
+			font-weight: bold;
+			color: #333;
+		}
+
+		.section {
+			margin: 30px 0;
+			color: #333;
+		}
+
+		.section h2 {
+			border-bottom: 2px solid #4CAF50;
+			padding-bottom: 10px;
+			color: #333;
+		}
+
+		.ingredients-list {
+			list-style: none;
+			color: #333;
+			padding: 0;
+		}
+
+		.ingredients-list li {
+			padding: 10px;
+			color: #333;
+			background: white;
+			margin: 8px 0;
+			border-radius: 4px;
+			border-left: 4px solid #4CAF50;
+		}
+
+		.back-btn {
+			display: inline-block;
+			margin-bottom: 20px;
+			padding: 10px 20px;
+			background: #4CAF50;
+			color: white;
+			text-decoration: none;
+			border-radius: 4px;
+		}
+
+		.back-btn:hover {
+			background: #45a049;
+		}
+	</style>
+</head>
+
+<body class="is-preload">
+
+	<!-- Header -->
+	<header id="header">
+		<a href="/" class="title">FoodApp</a>
+		<nav>
+			<ul>
+				<li><a href="/">Home</a></li>
+				<li><a href="/favorites">Favorites</a></li>
+				<li><a href="/fridge">Fridge</a></li>
+				<li><a href="/generic">About</a></li>
+				<li><a href="/login" class="button primary small signin-btn">Sign In</a></li>
+			</ul>
+		</nav>
+	</header>
+
+	<!-- Wrapper -->
+	<div id="wrapper">
+		<div class="recipe-container">
+			<a href="javascript:history.back()" class="back-btn">← Back to Results</a>
+
+			<div class="recipe-header">
+				<div class="recipe-image">
+					<img src="{{ recipe.image }}" alt="{{ recipe.title }}">
+				</div>
+
+				<div class="recipe-info">
+					<h1>{{ recipe.title }}</h1>
+
+					<div class="recipe-stats">
+						{% if recipe.readyInMinutes %}
+						<div class="stat">
+							<div class="stat-label">Ready in</div>
+							<div class="stat-value">{{ recipe.readyInMinutes }} min</div>
+						</div>
+						{% endif %}
+
+						{% if recipe.servings %}
+						<div class="stat">
+							<div class="stat-label">Servings</div>
+							<div class="stat-value">{{ recipe.servings }}</div>
+						</div>
+						{% endif %}
+
+						{% if recipe.healthScore %}
+						<div class="stat">
+							<div class="stat-label">Health Score</div>
+							<div class="stat-value">{{ recipe.healthScore | round | int }}</div>
+						</div>
+						{% endif %}
+
+						{% if recipe.spoonacularScore %}
+						<div class="stat">
+							<div class="stat-label">Popularity</div>
+							<div class="stat-value">{{ (recipe.spoonacularScore / 10) | round | int }}</div>
+						</div>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+
+			{% if recipe.summary %}
+			<div class="section">
+				<h2>About</h2>
+				<p>{{ recipe.summary | safe }}</p>
+			</div>
+			{% endif %}
+
+			{% if recipe.extendedIngredients %}
+			<div class="section">
+				<h2>Ingredients ({{ recipe.extendedIngredients | length }})</h2>
+				<ul class="ingredients-list">
+					{% for ingredient in recipe.extendedIngredients %}
+					<li>
+						<b>{{ ingredient.original }}</b>
+					</li>
+					{% endfor %}
+				</ul>
+			</div>
+			{% endif %}
+
+			{% if recipe.instructions %}
+			<div class="section">
+				<h2>Instructions</h2>
+				<p>{{ recipe.instructions | safe }}</p>
+			</div>
+			{% endif %}
+
+		</div>
+	</div>
+
+	<!-- Footer -->
+	<footer id="footer" class="wrapper alt">
+		<div class="inner">
+			<ul class="menu">
+				<li>&copy; Untitled. All rights reserved.</li>
+				<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+			</ul>
+		</div>
+	</footer>
+
+	<!-- Scripts -->
+	<script src="/assets/js/jquery.min.js"></script>
+	<script src="/assets/js/jquery.scrollex.min.js"></script>
+	<script src="/assets/js/jquery.scrolly.min.js"></script>
+	<script src="/assets/js/browser.min.js"></script>
+	<script src="/assets/js/breakpoints.min.js"></script>
+	<script src="/assets/js/util.js"></script>
+	<script src="/assets/js/main.js"></script>
+
+</body>
+
+</html>
