@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, send_from_directory
 import os
-import api
+from api import *
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
@@ -13,13 +13,22 @@ app = Flask(__name__, template_folder='templates')
 # ---------------------------------------------------------------------------
 
 @app.route('/')
+@app.route('/home')
 def home():
     return render_template('index.html')
 
 
 @app.route('/search', methods=['GET'])
 def search_page():
-    return render_template('search.html')
+
+    query = request.args.get('q', '')
+    results = []
+
+    if query:
+        data = search_recipes(query)
+        results = data.get('results', [])
+
+    return render_template('results.html', search_items=results, query=query)
 
 
 @app.route('/fridge', methods=['GET'])
@@ -59,7 +68,7 @@ def elements_page():
 @app.route('/search', methods=['POST'])
 def search():
     query = request.form.get('query') or request.form.get('q') or ''
-    results = api.search_recipes(query)
+    results = api.search_recipes(query, number=10)
     return results
 
 
@@ -91,8 +100,9 @@ def similar(recipe_id):
 
 @app.route('/recipe/<int:recipe_id>')
 def recipe(recipe_id):
-    result = api.get_recipe_information(recipe_id)
-    return result
+    result = get_recipe_information(recipe_id)
+    print("result: ", result)
+    return render_template('recipe.html', recipe=result)
 
 
 @app.route('/joke')
