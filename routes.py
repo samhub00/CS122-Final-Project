@@ -20,11 +20,13 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 
 app = Flask(__name__, template_folder='templates')
 app.config['SECRET_KEY'] = os.getenv('APP_SECRET_KEY')
-#app.config['SQLALCHEMY_DATABASE_URI'] = (
-#    f"mysql+pymysql://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}"
-#    f"@{os.getenv('DB_HOST')}:{os.getenv('DB_PORT')}/{os.getenv('DB_NAME')}"
-#)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
+
+#CONNECTION TO AIVEN DATABASE IMPORTANT
+app.config['SQLALCHEMY_DATABASE_URI'] = (
+    f"mysql+pymysql://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}"
+    f"@{os.getenv('DB_HOST')}:{os.getenv('DB_PORT')}/{os.getenv('DB_NAME')}"
+)
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
