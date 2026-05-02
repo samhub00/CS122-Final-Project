@@ -10,11 +10,11 @@
     <title>About - FoodApp</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="stylesheet" href="assets/css/main.css" />
-    <link rel="stylesheet" href="assets/css/navbar.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/navbar.css') }}" />
     <noscript>
-        <link rel="stylesheet" href="assets/css/noscript.css" />
-    </noscript>
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/noscript.css') }}" />
+	</noscript>
 </head>
 
 <body class="is-preload">
@@ -24,11 +24,17 @@
         <a href="index.html" class="title">FoodApp</a>
         <nav>
             <ul>
-                <li><a href="index.html">Home</a></li>
                 <li><a href="/favorites">Favorites</a></li>
-                <li><a href="fridge.html">Fridge</a></li>
-                <li><a href="generic.html" class="active">About</a></li>
-                <li><a href="login.html" class="button primary small signin-btn">Sign In</a></li>
+                <li><a href="/about">About</a></li>
+
+                {% if current_user.is_authenticated %}
+
+                <li><a href="/stats">Stats</a></li>
+                <li><a href="/logout" class="button primary small signin-btn">Logout</a></li>
+
+                {% else %}
+                <li><a href="/login" class="button primary small signin-btn">Sign In</a></li>
+                {% endif %}
             </ul>
         </nav>
     </header>
@@ -85,14 +91,15 @@
     </footer>
 
     <!-- Scripts -->
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/jquery.scrollex.min.js"></script>
-    <script src="assets/js/jquery.scrolly.min.js"></script>
-    <script src="assets/js/browser.min.js"></script>
-    <script src="assets/js/breakpoints.min.js"></script>
-    <script src="assets/js/util.js"></script>
-    <script src="assets/js/main.js"></script>
-
+    <script src="{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/jquery.scrollex.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/jquery.scrolly.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/browser.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/breakpoints.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/util.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
 </body>
 
 </html>

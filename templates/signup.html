@@ -9,10 +9,10 @@
 	<title>Create Account - FoodApp</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<link rel="stylesheet" href="assets/css/main.css" />
-	<link rel="stylesheet" href="assets/css/navbar.css" />
-	<noscript>
-		<link rel="stylesheet" href="assets/css/noscript.css" />
+    	<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}" />
+    	<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/navbar.css') }}" />
+    	<noscript>
+    	<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/noscript.css') }}" />
 	</noscript>
 	<style>
 		.auth-wrapper {
@@ -182,9 +182,29 @@
 			margin-top: 0.35em;
 		}
 
+		.field-hint.error {
+			color: #f44336;
+			opacity: 1;
+		}
+
 		
 	</style>
 </head>
+
+<body>
+<h1>Register Page</h1>
+
+<form method="POST" action="">
+	{{ form.hidden_tag() }}
+	{{ form.username }}
+	{{ form.password }}
+	{{ form.submit }}
+</form>
+
+<a href="{{ url_for('login') }}">Already have an account? Log In</a>
+</body>
+
+
 
 <body class="is-preload">
 
@@ -192,75 +212,22 @@
 	<header id="header">
 		<a href="index.html" class="title">FoodApp</a>
 		<nav>
-			<ul>
-				<li><a href="index.html">Home</a></li>
-				<li><a href="/favorites">Favorites</a></li>
-				<li><a href="fridge.html">Fridge</a></li>
-				<li><a href="generic.html">About</a></li>
-				<li><a href="login.html" class="button primary small signin-btn active">Sign In</a></li>
-			</ul>
+            <ul>
+                <li><a href="/favorites">Favorites</a></li>
+                <li><a href="/about">About</a></li>
+
+                {% if current_user.is_authenticated %}
+
+                <li><a href="/stats">Stats</a></li>
+                <li><a href="/logout" class="button primary small signin-btn">Logout</a></li>
+
+                {% else %}
+                <li><a href="/login" class="button primary small signin-btn">Sign In</a></li>
+                {% endif %}
+            </ul>
 		</nav>
 	</header>
 
-	<!-- Wrapper -->
-	<div id="wrapper">
-
-		<!-- Main -->
-		<section id="main" class="wrapper">
-			<div class="inner">
-				<div class="auth-wrapper">
-					<div class="auth-card">
-						<h1>Create your account</h1>
-						<p class="subtitle">Join FoodApp to save favorites and get smart recipe suggestions.</p>
-
-						<div id="auth-banner" class="auth-banner" role="status" aria-live="polite"></div>
-
-						<form id="signup-form" action="/signup" method="post" novalidate>
-							<div class="field">
-								<label for="name">Full name</label>
-								<input type="text" name="name" id="name" autocomplete="name" required />
-							</div>
-							<div class="field">
-								<label for="email">Email</label>
-								<input type="email" name="email" id="email" autocomplete="email" required />
-							</div>
-							<div class="field">
-								<label for="username">Username</label>
-								<input type="text" name="username" id="username" autocomplete="username" required />
-							</div>
-							<div class="field">
-								<label for="password">Password</label>
-								<div class="password-wrap">
-									<input type="password" name="password" id="password" autocomplete="new-password"
-										minlength="8" required />
-									<button type="button" class="toggle-pw" data-target="password"
-										aria-label="Show password">Show</button>
-								</div>
-								<div class="field-hint">At least 8 characters.</div>
-							</div>
-							<div class="field">
-								<label for="confirm">Confirm password</label>
-								<div class="password-wrap">
-									<input type="password" name="confirm" id="confirm" autocomplete="new-password"
-										minlength="8" required />
-									<button type="button" class="toggle-pw" data-target="confirm"
-										aria-label="Show password">Show</button>
-								</div>
-							</div>
-							<ul class="actions">
-								<li><button type="submit" class="button primary">Create Account</button></li>
-							</ul>
-						</form>
-
-						<div class="auth-footer">
-							<p>Already have an account? <a href="login.html">Sign in</a></p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-
-	</div>
 
 	<!-- Footer -->
 	<footer id="footer" class="wrapper alt">
@@ -273,13 +240,16 @@
 	</footer>
 
 	<!-- Scripts -->
-	<script src="assets/js/jquery.min.js"></script>
-	<script src="assets/js/jquery.scrollex.min.js"></script>
-	<script src="assets/js/jquery.scrolly.min.js"></script>
-	<script src="assets/js/browser.min.js"></script>
-	<script src="assets/js/breakpoints.min.js"></script>
-	<script src="assets/js/util.js"></script>
-	<script src="assets/js/main.js"></script>
+    <script src="{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/jquery.scrollex.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/jquery.scrolly.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/browser.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/breakpoints.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/util.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+
 	<script>
 		// Password visibility toggles
 		document.querySelectorAll('.toggle-pw').forEach(function (btn) {
