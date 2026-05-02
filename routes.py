@@ -20,10 +20,11 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 
 app = Flask(__name__, template_folder='templates')
 app.config['SECRET_KEY'] = os.getenv('APP_SECRET_KEY')
-app.config['SQLALCHEMY_DATABASE_URI'] = (
-    f"mysql+pymysql://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}"
-    f"@{os.getenv('DB_HOST')}:{os.getenv('DB_PORT')}/{os.getenv('DB_NAME')}"
-)
+#app.config['SQLALCHEMY_DATABASE_URI'] = (
+#    f"mysql+pymysql://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}"
+#    f"@{os.getenv('DB_HOST')}:{os.getenv('DB_PORT')}/{os.getenv('DB_NAME')}"
+#)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
@@ -156,13 +157,79 @@ def fridge_page():
 @app.route('/favorites', methods=['GET'])
 @login_required
 def favorites_page():
-    return render_template('favorites.html')
+    favs = Favorite.query.filter_by(user_id=current_user.id).all()
+    recipes = []
+    for fav in favs:
+        recipe_obj = db.session.get(Recipe, fav.recipe_id)
+        if recipe_obj:
+            data = dict(recipe_obj.data)
+            diets = data.get('diets') or []
+            dish_types = data.get('dishTypes') or []
+            ready = data.get('readyInMinutes') or 999
+            if 'vegetarian' in diets or 'vegan' in diets:
+                data['_category'] = 'vegetarian'
+            elif 'dessert' in dish_types:
+                data['_category'] = 'dessert'
+            elif ready <= 30:
+                data['_category'] = 'quick'
+            else:
+                data['_category'] = 'other'
+            recipes.append(data)
+    return render_template('favorites.html', recipes=recipes)
+
+
+@app.route('/remove_favorite', methods=['POST'])
+@login_required
+def remove_favorite():
+    from flask import jsonify
+    recipe_id = request.form.get('recipe_id')
+    if recipe_id:
+        fav = Favorite.query.filter_by(
+            user_id=current_user.id,
+            recipe_id=int(recipe_id)
+        ).first()
+        if fav:
+            db.session.delete(fav)
+            db.session.commit()
+    return jsonify({'ok': True})
 
 @app.route('/stats', methods=['GET', 'POST'])
 @login_required
 def stats():
-    #placeholder atm will make stats.html later
-    return render_template('index.html')
+    import json
+    NUTRIENT_KEYS = ['Calories', 'Fat', 'Protein', 'Carbohydrates', 'Fiber']
+
+    favs = Favorite.query.filter_by(user_id=current_user.id).all()
+    recipes = []
+    for fav in favs:
+        recipe_obj = db.session.get(Recipe, fav.recipe_id)
+        if not recipe_obj:
+            continue
+        data = recipe_obj.data
+        nutrients = {k: 0 for k in NUTRIENT_KEYS}
+        for n in (data.get('nutrition') or {}).get('nutrients', []):
+            if n['name'] in nutrients:
+                nutrients[n['name']] = n['amount']
+        recipes.append({
+            'id': data.get('id'),
+            'title': data.get('title', f'Recipe {fav.recipe_id}'),
+            'nutrients': nutrients,
+        })
+
+    # Summary stats across all favorites
+    def avg(key):
+        vals = [r['nutrients'][key] for r in recipes if r['nutrients'][key] > 0]
+        return round(sum(vals) / len(vals), 1) if vals else 0
+
+    summary = {
+        'count': len(recipes),
+        'avg_calories': avg('Calories'),
+        'avg_protein': avg('Protein'),
+        'avg_fat': avg('Fat'),
+    }
+
+    return render_template('stats.html', recipes=recipes,
+                           recipes_json=json.dumps(recipes), summary=summary)
 
 #generic page for project details
 @app.route('/about')

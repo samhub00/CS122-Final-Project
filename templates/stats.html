@@ -1,0 +1,371 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<title>Stats - FoodApp</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}" />
+	<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/navbar.css') }}" />
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+	<style>
+		.stats-inner {
+			max-width: 1000px;
+			margin: 0 auto;
+			padding: 0 1em;
+		}
+
+		.stats-header {
+			text-align: center;
+			margin-bottom: 2em;
+		}
+
+		.stats-header h1 { font-size: 2.2em; margin: 0 0 0.25em; }
+		.stats-header p  { margin: 0; opacity: 0.8; }
+
+		/* Summary cards */
+		.summary-row {
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+			gap: 1em;
+			margin-bottom: 2.5em;
+		}
+
+		.summary-card {
+			background: rgba(255,255,255,0.07);
+			border: 1px solid rgba(255,255,255,0.12);
+			border-radius: 12px;
+			padding: 1.2em 1em;
+			text-align: center;
+		}
+
+		.summary-card .label {
+			font-size: 0.72em;
+			letter-spacing: 0.12em;
+			text-transform: uppercase;
+			opacity: 0.7;
+			margin-bottom: 0.4em;
+		}
+
+		.summary-card .value {
+			font-size: 2em;
+			font-weight: 700;
+			color: #fbbf24;
+			line-height: 1;
+		}
+
+		.summary-card .unit {
+			font-size: 0.75em;
+			opacity: 0.6;
+			margin-top: 0.2em;
+		}
+
+		/* Comparison section */
+		.compare-section {
+			background: rgba(255,255,255,0.05);
+			border: 1px solid rgba(255,255,255,0.1);
+			border-radius: 16px;
+			padding: 1.8em;
+			margin-bottom: 2em;
+		}
+
+		.compare-section h2 {
+			margin: 0 0 1em;
+			font-size: 1.25em;
+		}
+
+		.compare-controls {
+			display: flex;
+			align-items: center;
+			gap: 1em;
+			margin-bottom: 1.5em;
+			flex-wrap: wrap;
+		}
+
+		.compare-controls label {
+			font-size: 0.85em;
+			opacity: 0.8;
+			white-space: nowrap;
+		}
+
+		.compare-controls select {
+			flex: 1;
+			min-width: 200px;
+			background: rgba(255,255,255,0.1);
+			border: 1px solid rgba(255,255,255,0.2);
+			border-radius: 8px;
+			color: #fff;
+			padding: 0.5em 0.8em;
+			font-size: 0.9em;
+			cursor: pointer;
+		}
+
+		.chart-wrap {
+			position: relative;
+			height: 340px;
+		}
+
+		.chart-row {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 1.5em;
+		}
+
+		@media (max-width: 640px) {
+			.chart-row { grid-template-columns: 1fr; }
+		}
+
+		.chart-box {
+			background: rgba(255,255,255,0.04);
+			border: 1px solid rgba(255,255,255,0.08);
+			border-radius: 12px;
+			padding: 1.2em;
+		}
+
+		.chart-box h3 {
+			margin: 0 0 1em;
+			font-size: 0.9em;
+			letter-spacing: 0.08em;
+			text-transform: uppercase;
+			opacity: 0.7;
+		}
+
+		.chart-box .chart-wrap { height: 260px; }
+
+		.empty-state {
+			text-align: center;
+			padding: 4em 2em;
+			opacity: 0.7;
+		}
+
+		.empty-state a {
+			color: #fbbf24;
+		}
+	</style>
+</head>
+
+<body class="is-preload">
+
+	<header id="header">
+		<a href="/" class="title">FoodApp</a>
+		<nav>
+			<ul>
+				<li><a href="/favorites">Favorites</a></li>
+				<li><a href="/about">About</a></li>
+				{% if current_user.is_authenticated %}
+				<li><a href="/stats">Stats</a></li>
+				<li><a href="/logout" class="button primary small signin-btn">Logout</a></li>
+				{% else %}
+				<li><a href="/login" class="button primary small signin-btn">Sign In</a></li>
+				{% endif %}
+			</ul>
+		</nav>
+	</header>
+
+	<div id="wrapper">
+		<section id="main" class="wrapper style2 fade-up">
+			<div class="inner">
+				<div class="stats-inner">
+
+					<div class="stats-header">
+						<h1>Nutrition Stats</h1>
+						<p>A breakdown of your saved favorites and how they compare to each other.</p>
+					</div>
+
+					{% if recipes %}
+
+					<!-- Summary cards -->
+					<div class="summary-row">
+						<div class="summary-card">
+							<div class="label">Saved Recipes</div>
+							<div class="value">{{ summary.count }}</div>
+							<div class="unit">favorites</div>
+						</div>
+						<div class="summary-card">
+							<div class="label">Avg Calories</div>
+							<div class="value">{{ summary.avg_calories }}</div>
+							<div class="unit">kcal / serving</div>
+						</div>
+						<div class="summary-card">
+							<div class="label">Avg Protein</div>
+							<div class="value">{{ summary.avg_protein }}</div>
+							<div class="unit">g / serving</div>
+						</div>
+						<div class="summary-card">
+							<div class="label">Avg Fat</div>
+							<div class="value">{{ summary.avg_fat }}</div>
+							<div class="unit">g / serving</div>
+						</div>
+					</div>
+
+					<!-- Comparison charts -->
+					<div class="compare-section">
+						<h2>Compare a Recipe to Your Other Favorites</h2>
+						<div class="compare-controls">
+							<label for="recipe-select">Recipe:</label>
+							<select id="recipe-select">
+								{% for r in recipes %}
+								<option value="{{ loop.index0 }}">{{ r.title }}</option>
+								{% endfor %}
+							</select>
+						</div>
+
+						<div class="chart-row">
+							<div class="chart-box">
+								<h3>Calories (kcal)</h3>
+								<div class="chart-wrap">
+									<canvas id="cal-chart"></canvas>
+								</div>
+							</div>
+							<div class="chart-box">
+								<h3>Macros (g)</h3>
+								<div class="chart-wrap">
+									<canvas id="macro-chart"></canvas>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					{% else %}
+					<div class="empty-state">
+						<p>No favorites yet — <a href="/search?q=chicken">search for recipes</a> and add some to see your stats.</p>
+					</div>
+					{% endif %}
+
+				</div>
+			</div>
+		</section>
+	</div>
+
+	<footer id="footer" class="wrapper style1-alt">
+		<div class="inner">
+			<ul class="menu">
+				<li>&copy; FoodApp. CS122 Final Project.</li>
+			</ul>
+		</div>
+	</footer>
+
+	<script src="{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='assets/js/jquery.scrollex.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='assets/js/jquery.scrolly.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='assets/js/browser.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='assets/js/breakpoints.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='assets/js/util.js') }}"></script>
+	<script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+
+	{% if recipes %}
+	<script>
+		var recipes = {{ recipes_json | safe }};
+
+		var AMBER  = 'rgba(251, 191, 36, 0.85)';
+		var SLATE  = 'rgba(148, 163, 184, 0.55)';
+		var AMBER_BORDER = 'rgba(251, 191, 36, 1)';
+		var SLATE_BORDER = 'rgba(148, 163, 184, 0.9)';
+
+		var chartDefaults = {
+			responsive: true,
+			maintainAspectRatio: false,
+			plugins: {
+				legend: {
+					labels: { color: '#e2e8f0', font: { size: 12 } }
+				}
+			},
+			scales: {
+				x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.06)' } },
+				y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.06)' }, beginAtZero: true }
+			}
+		};
+
+		function avgOthers(idx, key) {
+			var others = recipes.filter(function(_, i) { return i !== idx; });
+			if (!others.length) return 0;
+			var sum = others.reduce(function(acc, r) { return acc + (r.nutrients[key] || 0); }, 0);
+			return Math.round(sum / others.length * 10) / 10;
+		}
+
+		// Calories chart
+		var calCtx = document.getElementById('cal-chart').getContext('2d');
+		var calChart = new Chart(calCtx, {
+			type: 'bar',
+			data: {
+				labels: ['Selected', 'Avg of Others'],
+				datasets: [{
+					label: 'Calories (kcal)',
+					data: [0, 0],
+					backgroundColor: [AMBER, SLATE],
+					borderColor: [AMBER_BORDER, SLATE_BORDER],
+					borderWidth: 1,
+					borderRadius: 6,
+				}]
+			},
+			options: Object.assign({}, chartDefaults, {
+				plugins: Object.assign({}, chartDefaults.plugins, {
+					legend: { display: false }
+				})
+			})
+		});
+
+		// Macros chart
+		var macroCtx = document.getElementById('macro-chart').getContext('2d');
+		var macroChart = new Chart(macroCtx, {
+			type: 'bar',
+			data: {
+				labels: ['Fat', 'Protein', 'Carbs', 'Fiber'],
+				datasets: [
+					{
+						label: 'Selected',
+						data: [0, 0, 0, 0],
+						backgroundColor: AMBER,
+						borderColor: AMBER_BORDER,
+						borderWidth: 1,
+						borderRadius: 4,
+					},
+					{
+						label: 'Avg of Others',
+						data: [0, 0, 0, 0],
+						backgroundColor: SLATE,
+						borderColor: SLATE_BORDER,
+						borderWidth: 1,
+						borderRadius: 4,
+					}
+				]
+			},
+			options: chartDefaults
+		});
+
+		function updateCharts(idx) {
+			var r = recipes[idx];
+			var n = r.nutrients;
+
+			calChart.data.datasets[0].data = [
+				n['Calories'] || 0,
+				avgOthers(idx, 'Calories')
+			];
+			calChart.update();
+
+			macroChart.data.datasets[0].data = [
+				n['Fat'] || 0,
+				n['Protein'] || 0,
+				n['Carbohydrates'] || 0,
+				n['Fiber'] || 0
+			];
+			macroChart.data.datasets[1].data = [
+				avgOthers(idx, 'Fat'),
+				avgOthers(idx, 'Protein'),
+				avgOthers(idx, 'Carbohydrates'),
+				avgOthers(idx, 'Fiber')
+			];
+			macroChart.update();
+		}
+
+		document.getElementById('recipe-select').addEventListener('change', function() {
+			updateCharts(parseInt(this.value));
+		});
+
+		// Init with first recipe
+		updateCharts(0);
+	</script>
+	{% endif %}
+
+</body>
+</html>
