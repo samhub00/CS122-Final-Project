@@ -1,0 +1,54 @@
+/*
+  FoodApp -- navbar additions
+  Layered on top of Hyperspace's main.css. Keeps the default header look
+  while adding a distinct Sign In pill button.
+*/
+
+/* Slightly tighter spacing between nav items so Sign In fits cleanly */
+#header > nav > ul > li {
+	margin-left: 1.25em;
+}
+
+/* The Sign In button: override the default uppercase/faded nav link look */
+#header > nav > ul > li a.signin-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	background-color: #ffffff;
+	color: #d97706 !important;
+	border-radius: 999px;
+	padding: 0.4em 1em;
+	font-size: 0.6em;
+	font-weight: 700;
+	letter-spacing: 0.18em;
+	/* text-indent compensates for the trailing space added by letter-spacing,
+	   so the label sits visually centered inside the pill */
+	text-indent: 0.18em;
+	text-align: center;
+	text-transform: uppercase;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+	transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+	line-height: 1;
+}
+
+#header > nav > ul > li a.signin-btn:hover {
+	background-color: #fff8e1;
+	color: #92400e !important;
+	transform: translateY(-1px);
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+#header > nav > ul > li a.signin-btn.active {
+	background-color: #fff8e1;
+	color: #92400e !important;
+}
+
+/* Keep the pill a pill at the mobile breakpoint */
+@media screen and (max-width: 480px) {
+	#header > nav > ul > li a.signin-btn {
+		height: auto;
+		line-height: 1;
+		display: inline-block;
+		margin: 1em 0;
+	}
+}
