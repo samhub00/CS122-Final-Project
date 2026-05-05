@@ -27,11 +27,11 @@ def search_recipes(query):
     # return data
     
 
-def ingredient_search(ingredients):
+"""def ingredient_search(ingredients):
     response = api.search_ingredients(ingredients)
     data = response.json()
     return data['results']
-
+"""
 def get_similar_recipes(recipe_id):
     response = api.get_similar_recipes(recipe_id, number=5)
     data = response.json()
