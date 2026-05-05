@@ -48,11 +48,8 @@ with app.app_context():
 
 
 class RegisterForm(FlaskForm):
-    #name = StringField(validators=[InputRequired(), Length(min=1, max=150)], render_kw={"placeholder": "Full name"})
-    #email = StringField(validators=[InputRequired(), Length(min=1, max=150)], render_kw={"placeholder": "Email"})
     username = StringField(validators=[InputRequired(), Length(min=4, max=150)], render_kw={"placeholder": "Username"})
     password = PasswordField(validators=[InputRequired(), Length(min=8, max=150)], render_kw={"placeholder": "Password"})
-    #confirm = PasswordField(validators=[InputRequired(), Length(min=8, max=150)], render_kw={"placeholder": "Confirm password"})
     submit = SubmitField("Create Account")
 
     def validate_username(self, username):
@@ -66,9 +63,7 @@ class LoginForm(FlaskForm):
     submit = SubmitField("Login")
 
 
-# ---------------------------------------------------------------------------
 # Login Handling -- use Flask-Login to manage user sessions, and Flask-WTF for form handling
-# ---------------------------------------------------------------------------
 
 #login page
 @app.route('/login', methods=['GET', 'POST'])
@@ -124,16 +119,17 @@ def logout():
     logout_user()
     return redirect(url_for('home'))
 
-# ---------------------------------------------------------------------------
 # Page routes (GET) -- render the HTML templates
-# ---------------------------------------------------------------------------
+
 
 
 #Home page route
 @app.route('/')
 @app.route('/home')
 def home():
-    return render_template('index.html')
+    recipe_examples = Recipe.query.limit(5).all()
+    print("DEBUG: Retrieved recipe examples from database: ", recipe_examples)  # Debug print to check retrieved recipes
+    return render_template('index.html', recipe_examples=recipe_examples)
 
 #search page 
 @app.route('/search', methods=['GET'])
@@ -148,13 +144,6 @@ def search():
 
     return render_template('results.html', search_items=results, query=query)
 
-'''
-#Fridge page route - DEPRECATED
-@app.route('/fridge', methods=['GET'])
-def fridge_page():
-    return render_template('fridge.html')
-
-'''
 
 @app.route('/favorites', methods=['GET'])
 @login_required
@@ -195,6 +184,7 @@ def remove_favorite():
             db.session.commit()
     return jsonify({'ok': True})
 
+
 @app.route('/stats', methods=['GET', 'POST'])
 @login_required
 def stats():
@@ -233,23 +223,14 @@ def stats():
     return render_template('stats.html', recipes=recipes,
                            recipes_json=json.dumps(recipes), summary=summary)
 
-#generic page for project details
+#about page for project details
 @app.route('/about')
 @app.route('/generic')
 def generic_page():
     return render_template('generic.html')
 
-"""
-@app.route('/elements')
-def elements_page():
-    return render_template('elements.html')
-"""
 
-
-
-# ---------------------------------------------------------------------------
 # API / form routes (POST) -- handle form submissions, return data
-# ---------------------------------------------------------------------------
 
 @app.route('/search', methods=['POST'])
 def results():
@@ -257,13 +238,7 @@ def results():
     results = api.search_recipes(query, number=10)
     return results
 
-'''
-@app.route('/fridge', methods=['POST'])
-def fridge():
-    ingredients = request.form['ingredients']
-    results = api.ingredient_search(ingredients)
-    return results
-'''
+
 @app.route('/add_favorite', methods=['POST'])
 @login_required
 def add_favorite():
@@ -308,12 +283,7 @@ def add_favorite():
             flash('Error adding favorite. Ensure the recipe is saved first.', 'danger')
 
     return redirect(request.referrer or url_for('index'))
-"""
-@app.route('/similar/<int:recipe_id>')
-def similar(recipe_id):
-    results = api.get_similar_recipes(recipe_id)
-    return results
-"""
+
 #recipe route for information display
 #TODO: add function for checking database for downloaded recipe pre api call, and add to database if not present
 
@@ -340,29 +310,5 @@ def recipe(recipe_id):
 
 
 
-"""
-@app.route('/joke')
-def joke():
-    # joke = api.get_random_joke()
-    return "joke"
-
-"""
-# ---------------------------------------------------------------------------
-# Static assets -- the Hyperspace template references /assets/... and
-# /images/... relative to the HTML files, which live in templates/. Serve
-# them directly from there.
-# ---------------------------------------------------------------------------
-
-"""
-@app.route('/assets/<path:path>')
-def assets(path):
-    return send_from_directory(os.path.join(TEMPLATES_DIR, 'assets'), path)
-
-
-@app.route('/images/<path:path>')
-def images(path):
-    return send_from_directory(os.path.join(TEMPLATES_DIR, 'images'), path)
-"""
-
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=0, host='127.0.0.1')
