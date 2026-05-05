@@ -5,67 +5,163 @@
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
 <html>
-	<head>
-		<title>About - FoodApp</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<link rel="stylesheet" href="assets/css/navbar.css" />
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-	</head>
-	<body class="is-preload">
 
-		<!-- Header -->
-			<header id="header">
-				<a href="index.html" class="title">FoodApp</a>
-				<nav>
-            <ul>
-                <li><a href="/favorites">Favorites</a></li>
-                <li><a href="/about">About</a></li>
+<head>
+	<title>About - FoodApp</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}" />
+	<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/navbar.css') }}" />
+	<noscript>
+		<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/noscript.css') }}" />
+	</noscript>
+	<style>
+		.profile-credits {
+			padding: 4em 0;
+			text-align: center;
+			background: rgba(0, 0, 0, 0.2);
+			/* Slight contrast from the footer */
+			width: 100%;
+		}
 
-                {% if current_user.is_authenticated %}
+		.profile-credits h2 {
+			font-size: 1.2em;
+			margin-bottom: 2em;
+			opacity: 0.7;
+			letter-spacing: 0.1em;
+			text-transform: uppercase;
+		}
 
-                <li><a href="/stats">Stats</a></li>
-                <li><a href="/logout" class="button primary small signin-btn">Logout</a></li>
+		.profile-container {
+			display: flex;
+			justify-content: center;
+			gap: 4em;
+			/* Space between the two profiles */
+			flex-wrap: wrap;
+		}
 
-                {% else %}
-                <li><a href="/login" class="button primary small signin-btn">Sign In</a></li>
-                {% endif %}
-            </ul>
-				</nav>
-			</header>
-		<!-- Wrapper -->
-			<div id="wrapper">
+		.profile-card a {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			text-decoration: none !important;
+			transition: transform 0.2s ease;
+		}
 
-				<!-- Main -->
-					<section id="main" class="wrapper">
-						<div class="inner">
-							<h1 class="major">A Generic Page</h1>
-							<span class="image fit"><img src="images/pic04.jpg" alt="" /></span>
-							<p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fergiat. Pellentesque in mi eu massa lacinia malesuada et a elit. Donec urna ex, lacinia in purus ac, pretium pulvinar mauris. Curabitur sapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique.</p>
-							<p>Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fersapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique lorem ipsum dolor.</p>
-						</div>
-					</section>
+		.profile-card img {
+			width: 100px;
+			/* Larger size */
+			height: 100px;
+			border-radius: 50%;
+			object-fit: cover;
+			border: 3px solid #0077b5;
+			/* LinkedIn Blue border */
+			margin-bottom: 10px;
+		}
 
+		.profile-card span {
+			color: #0077b5;
+			font-weight: bold;
+			font-size: 1.1em;
+		}
+
+		.profile-card:hover {
+			transform: translateY(-5px);
+		}
+
+		@media (max-width: 480px) {
+			.profile-container {
+				gap: 2em;
+			}
+		}
+	</style>
+</head>
+
+<body class="is-preload">
+
+	<!-- Header -->
+	<header id="header">
+		<a href="/home" class="title">FoodApp</a>
+		<nav>
+			<ul>
+	
+				<li><a href="/home">Home</a></li>
+
+				{% if current_user.is_authenticated %}
+				<li><a href="/favorites">Favorites</a></li>
+				<li><a href="/stats">Stats</a></li>
+				<li><a href="/logout" class="button primary small signin-btn">Logout</a></li>
+
+				{% else %}
+				<li><a href="/login" class="button primary small signin-btn">Sign In</a></li>
+				{% endif %}
+			</ul>
+		</nav>
+	</header>
+	<!-- Wrapper -->
+	<div id="wrapper">
+
+		<!-- Main -->
+		<section id="main" class="wrapper">
+			<div class="inner">
+				<h1 class="major">About Food App</h1>
+				<span class="image fit"><img src="images/pic04.jpg" alt="" /></span>
+				<p>We are Alan and Sam, two guys who love cooking! Like the rest of us, we struggle with knowing what to
+					cook sometimes. Our idea for this website was to create a platform that lets you search for tasty
+					recipes without having to scroll through long pre-recipe writing, or close a bunch of pop-up ads.
+					Along with recipes, FoodApp can show you important statistics of your favorite recipes that can
+					assist you in your choices, keep your macros at the right level, and make sure you are getting the
+					right nutrients! Thank you for using FoodApp, we hope you find great things to cook!</p>
 			</div>
+		</section>
+		<div style="display: flex; align-items: center; gap: 12px; font-family: sans-serif;">
 
-		<!-- Footer -->
-			<footer id="footer" class="wrapper alt">
+			<section class="profile-credits">
 				<div class="inner">
-					<ul class="menu">
-						<li>&copy; FoodApp. CS122 Final Project.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-					</ul>
+					<h2>Created By</h2>
+					<div class="profile-container">
+						<div class="profile-card">
+							<a href="https://linkedin.com/sam-hubler/" target="_blank" rel="noopener">
+								<img src="{{ url_for('static', filename='images/samprofpic.jpg') }}" alt="Sam Hubler">
+								<span>Sam Hubler</span>
+							</a>
+						</div>
+
+						<div class="profile-card">
+							<a href="https://www.linkedin.com/in/alan-xiao-sjsu/" target="_blank" rel="noopener">
+								<img src="{{ url_for('static', filename='images/alanprofpic.jpg') }}" alt="Alan Xiao">
+								<span>Alan Xiao</span>
+							</a>
+						</div>
+					</div>
 				</div>
-			</footer>
+			</section>
 
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.scrollex.min.js"></script>
-			<script src="assets/js/jquery.scrolly.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+		</div>
 
-	</body>
+	</div>
+
+	<!-- Footer -->
+	<footer id="footer" class="wrapper alt">
+		<div class="inner">
+			<ul class="menu">
+				<li>&copy; FoodApp. CS122 Final Project.</li>
+				<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+			</ul>
+		</div>
+	</footer>
+
+	<!-- Scripts -->
+	<script src="{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+	<script src="{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='assets/js/jquery.scrollex.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='assets/js/jquery.scrolly.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='assets/js/browser.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='assets/js/breakpoints.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='assets/js/util.js') }}"></script>
+	<script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+
+</body>
+
 </html>

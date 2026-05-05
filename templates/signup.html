@@ -191,21 +191,6 @@
 	</style>
 </head>
 
-<body>
-<h1>Register Page</h1>
-
-<form method="POST" action="">
-	{{ form.hidden_tag() }}
-	{{ form.username }}
-	{{ form.password }}
-	{{ form.submit }}
-</form>
-
-<a href="{{ url_for('login') }}">Already have an account? Log In</a>
-</body>
-
-
-
 <body class="is-preload">
 
 	<!-- Header -->
@@ -213,7 +198,7 @@
 		<a href="/" class="title">FoodApp</a>
 		<nav>
             <ul>
-                <li><a href="/favorites">Favorites</a></li>
+                <li><a href="/home">Home</a></li>
                 <li><a href="/about">About</a></li>
 
                 {% if current_user.is_authenticated %}
@@ -228,6 +213,85 @@
 		</nav>
 	</header>
 
+	<div id="wrapper">
+    <section id="main" class="wrapper">
+        <div class="inner">
+            <div class="auth-page">
+                <div class="auth-shell">
+
+                    <aside class="auth-brand">
+                        <div class="brand-mark">FoodApp</div>
+                        <div class="brand-headline">
+                            <h2>Join a community of home chefs.</h2>
+                            <p>Create an account to save your favorite recipes, track your cooking stats, and get personalized meal ideas.</p>
+                        </div>
+                        <ul class="brand-features">
+                            <li>Unlimited recipe bookmarks</li>
+                            <li>Personalized cooking dashboard</li>
+                            <li>Ingredient-based search filters</li>
+                        </ul>
+                    </aside>
+
+                    <div class="auth-form">
+                        <h1>Create Account</h1>
+                        <p class="subtitle">Join FoodApp today and start cooking.</p>
+
+                        {% with messages = get_flashed_messages() %}
+                            {% if messages %}
+                            <div class="auth-banner"
+                                style="background: rgba(255,0,0,0.1); color: #ff6b6b; padding: 10px; border-radius: 5px; margin-bottom: 20px;">
+                                {{ messages[0] }}
+                            </div>
+                            {% endif %}
+                        {% endwith %}
+
+                        <form id="signup-form" method="POST" action="" novalidate>
+                            {{ form.hidden_tag() }}
+
+                            <div class="field">
+                                <label for="username">Username</label>
+                                {{ form.username(placeholder="Choose a unique username", autocomplete="username") }}
+                                {% for error in form.username.errors %}
+                                    <span style="color: #ff6b6b; font-size: 0.8em;">{{ error }}</span>
+                                {% endfor %}
+                            </div>
+
+                            <div class="field">
+                                <label for="password">Password</label>
+                                <div class="password-wrap">
+                                    {{ form.password(placeholder="Create a strong password", autocomplete="new-password") }}
+                                </div>
+                                {% for error in form.password.errors %}
+                                    <span style="color: #ff6b6b; font-size: 0.8em;">{{ error }}</span>
+                                {% endfor %}
+                            </div>
+
+                            {# Note: If your signup form has a 'confirm_password' field, add it here #}
+                            {% if form.confirm_password %}
+                            <div class="field">
+                                <label for="confirm_password">Confirm Password</label>
+                                <div class="password-wrap">
+                                    {{ form.confirm_password(placeholder="Repeat your password") }}
+                                </div>
+                                {% for error in form.confirm_password.errors %}
+                                    <span style="color: #ff6b6b; font-size: 0.8em;">{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+
+                            {{ form.submit(class="btn-primary-full", value="Create Account") }}
+                        </form>
+
+                        <div class="auth-footer">
+                            <p>Already have an account? <a href="{{ url_for('login') }}">Log in</a></p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
 
 	<!-- Footer -->
 	<footer id="footer" class="wrapper alt">

@@ -115,17 +115,21 @@
 			position: absolute;
 			top: 0.6em;
 			right: 0.6em;
-			width: 2.2em;
-			height: 2.2em;
+			width: 40px;
+			height: 40px;
+			padding: 0; 
+			box-sizing: border-box;
+			flex-shrink: 0; 
 			border-radius: 50%;
 			border: 0;
 			background: rgba(0, 0, 0, 0.45);
 			color: #ff6b9a;
 			font-size: 1.1em;
+			cursor: pointer;
 			display: inline-flex;
 			align-items: center;
 			justify-content: center;
-			cursor: pointer;
+			line-height: 1;
 			transition: background 0.15s ease, transform 0.12s ease;
 		}
 
@@ -267,10 +271,10 @@
 
 				<div class="fav-header">
 					<h1>Your Favorites</h1>
-					<p>All the recipes you've saved, in one place. Filter by category to jump straight to what you're
-						craving.</p>
+					<p>All the recipes you've saved, in one place.</p>
 				</div>
 
+				
 				<div class="fav-toolbar" role="tablist">
 					<button class="chip active" data-filter="all">All</button>
 					<button class="chip" data-filter="quick">Quick</button>
